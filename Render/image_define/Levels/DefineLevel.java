@@ -23,7 +23,7 @@ public interface DefineLevel {
     }
 
     static void Level0(Level currentLevel) {
-        currentLevel = new Level(800,600);
+        currentLevel.Resize(800,600);
         String imageUrl = "resources/Level/Level_0_V1.png";
         ArrayList<Pair<Integer, Integer>> levelDescription = new ArrayList<>(Arrays.asList(
                 new Pair<>(0, 250),
@@ -40,8 +40,8 @@ public interface DefineLevel {
     }
 
     static void Level1(Level currentLevel) {
-        currentLevel = new Level(800,600);
-        String imageUrl = "resources/Level/DefaultLevelIce.png";
+        currentLevel.Resize(1600,600);
+        String imageUrl = "resources/Level/Level_1_fire_V1.png";
         ArrayList<Pair<Integer, Integer>> levelDescription = new ArrayList<>(Arrays.asList(
                 new Pair<>(0, 250),
                 new Pair<>(25, 275)

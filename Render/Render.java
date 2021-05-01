@@ -17,7 +17,7 @@ public class Render extends Application {
     //DefineLevel defineLevel = new DefineLevel();
 
     public void start(Stage theStage) {
-        theStage.setTitle("src.Render");
+        theStage.setTitle("stony journey");
         music.start(theStage);
         ArrayList<String> input = new ArrayList<>(); //store the keyboard input
 
@@ -39,6 +39,7 @@ public class Render extends Application {
                     String code = e.getCode().toString();
                     if (!input.contains(code))
                         input.add(code);
+                    if (code.equals("R")) System.out.println(player.skin.getPositionX() + player.skin.getPositionY());
                 }
         );
 
@@ -63,7 +64,7 @@ public class Render extends Application {
                     player.skin.addForces(10, 0);
                 }
                 if (input.contains("UP")) {
-                    System.out.println(player.skin.getPositionY());
+                    //System.out.println(player.skin.getPositionY());
                     if (player.skin.getPositionY() > (currentLevel.getGround(player.skin.getPositionX()) - 1.5*player.skin.getHeight())) {
                         player.skin.addForces(0, -10);
                     }
@@ -75,7 +76,7 @@ public class Render extends Application {
                 player.updateSkin(t);
                 currentLevel.updateLevel(t);
 
-                if (player.nextLevel == true) {
+                if (player.nextLevel) {
                     currentLevel.modifyLevel(currentLevel, currentLevelNum);
                     currentLevelNum = (currentLevelNum + 1) % 2;
                     player.nextLevel = false;
@@ -85,9 +86,9 @@ public class Render extends Application {
                 double offsetlandX = player.skin.getPositionX() - (width >> 1);
                 double offsetlandY = player.skin.getPositionY() - (height >> 1);
                 if (offsetlandX < 0) offsetlandX = 0;
-                if (offsetlandX > currentLevel.getSizeX()-512) offsetlandX = currentLevel.getSizeX()-width;
+                if (offsetlandX > currentLevel.getSizeX()-800) offsetlandX = currentLevel.getSizeX()-width;
                 if (offsetlandY < 0) offsetlandY = 0;
-                if (offsetlandY > currentLevel.getSizeY()-512) offsetlandY = currentLevel.getSizeY()-height;
+                if (offsetlandY > currentLevel.getSizeY()-600) offsetlandY = currentLevel.getSizeY()-height;
 
                 // background image clears canvas;
                 gc.drawImage(background0,0,0);

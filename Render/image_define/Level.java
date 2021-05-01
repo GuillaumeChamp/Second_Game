@@ -11,8 +11,8 @@ import java.util.ArrayList;
 public class Level implements DefineLevel {
     private javafx.scene.image.Image background;
     private ArrayList<Pair<Integer, Integer>> levelDescription;
-    private final double sizeX;
-    private final double sizeY;
+    private double sizeX;
+    private double sizeY;
     public ArrayList<image_define.MovingAnimatedImage> enemies = new ArrayList<>();
 
     public Level(long width, long height){
@@ -34,6 +34,11 @@ public class Level implements DefineLevel {
 
     public double getSizeY() {
         return sizeY;
+    }
+
+    public void Resize(long X,long Y){
+        this.sizeX=X;
+        this.sizeY=Y;
     }
 
     public Image getBackground() {
