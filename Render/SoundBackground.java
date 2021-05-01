@@ -6,7 +6,7 @@ import javafx.stage.Stage;
 import java.io.File;
 
 public class SoundBackground extends Application implements Runnable {
-    final File file = new File("Render/src/resources/TwinMusicom-8-bit-March.mp3");
+    final File file = new File("Render/resources/TwinMusicom-8-bit-March.mp3");
     final Media media = new Media(file.toURI().toString());
     final MediaPlayer music = new MediaPlayer(media);
 
