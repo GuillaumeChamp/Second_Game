@@ -36,9 +36,10 @@ public class Level implements DefineLevel {
         return sizeY;
     }
 
-    public void Resize(long X,long Y){
-        this.sizeX=X;
-        this.sizeY=Y;
+    public void Resize(){
+        this.sizeX=background.getWidth();
+        this.sizeY=background.getHeight();
+
     }
 
     public Image getBackground() {

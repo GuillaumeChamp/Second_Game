@@ -39,7 +39,8 @@ public class Render extends Application {
                     String code = e.getCode().toString();
                     if (!input.contains(code))
                         input.add(code);
-                    if (code.equals("R")) System.out.println(player.skin.getPositionX() + player.skin.getPositionY());
+                    if (code.equals("R")) System.out.println(player.skin.getPositionX()+" "+ player.skin.getPositionY());
+                    if ((code.equals("E"))) currentLevel.setGroundOnly();
                 }
         );
 
@@ -65,13 +66,9 @@ public class Render extends Application {
                 }
                 if (input.contains("UP")) {
                     //System.out.println(player.skin.getPositionY());
-                    if (player.skin.getPositionY() > (currentLevel.getGround(player.skin.getPositionX()) - 1.5*player.skin.getHeight())) {
-                        player.skin.addForces(0, -10);
+                    if (player.skin.getPositionY() > (currentLevel.getGround(player.skin.getPositionX()) - 1.3*player.skin.getHeight())) {
+                        player.skin.addForces(0, -30);
                     }
-                }
-                if (input.contains("S")) {
-                    currentLevel.setGroundOnly();
-                    input.remove("S");
                 }
                 player.updateSkin(t);
                 currentLevel.updateLevel(t);
