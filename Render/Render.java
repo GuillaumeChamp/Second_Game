@@ -7,17 +7,19 @@ import javafx.scene.*;
 import javafx.scene.canvas.*;
 import javafx.animation.AnimationTimer;
 import image_define.Level;
+import javafx.util.Pair;
 
 
 public class Render extends Application {
     final long width = 800; //width of the window
     final long height = 600; //height of the window
     SoundBackground music= new SoundBackground();
+    Integer iceFire = 0;
     Integer currentLevelNum = 0;
     //DefineLevel defineLevel = new DefineLevel();
 
     public void start(Stage theStage) {
-        theStage.setTitle("src.Render");
+        theStage.setTitle("Stony Journey");
         music.start(theStage);
         ArrayList<String> input = new ArrayList<>(); //store the keyboard input
 
@@ -33,7 +35,6 @@ public class Render extends Application {
 
         Level currentLevel = new Level(width, height);
         currentLevel.modifyLevel(currentLevel, currentLevelNum);
-        currentLevelNum += 1;
         Player player = new Player(10,0,40,60, 40, currentLevel);
         theScene.setOnKeyPressed(e -> {
                     String code = e.getCode().toString();
@@ -63,31 +64,43 @@ public class Render extends Application {
                     player.skin.addForces(10, 0);
                 }
                 if (input.contains("UP")) {
-                    System.out.println(player.skin.getPositionY());
-                    if (player.skin.getPositionY() > (currentLevel.getGround(player.skin.getPositionX()) - 1.5*player.skin.getHeight())) {
+                    if (player.skin.getPositionY() > (currentLevel.getGround(player.skin.getPositionX(), player.skin.getWidth()).getKey() - 1.5*player.skin.getHeight())) {
                         player.skin.addForces(0, -10);
                     }
                 }
-                if (input.contains("S")) {
+                if (input.contains("C")) {
+                    iceFire = (iceFire + 1) % 2;
+                    //System.out.println(currentLevelNum);
+                    //System.out.println(iceFire);
+                    currentLevel.modifyLevel(currentLevel, currentLevelNum+iceFire);
+                    Pair<Integer, Boolean> groundDes = currentLevel.getGround(player.skin.getPositionX(), player.skin.getWidth());
+                    player.skin.setPosition(player.skin.getPositionX(), groundDes.getKey());
+                    input.remove("C");
+                    currentLevel.setGroundOnly();
+                    player.onFireSide = iceFire != 1;
+                }
+                /*if (input.contains("S")) {
                     currentLevel.setGroundOnly();
                     input.remove("S");
                 }
+                 */
                 player.updateSkin(t);
                 currentLevel.updateLevel(t);
 
-                if (player.nextLevel == true) {
+                if (player.nextLevel) {
+                    currentLevelNum = (currentLevelNum + 2) % 4;
                     currentLevel.modifyLevel(currentLevel, currentLevelNum);
-                    currentLevelNum = (currentLevelNum + 1) % 2;
                     player.nextLevel = false;
-                    player.skin.setPosition(0, currentLevel.getGround(0.0));
+                    //System.out.println(currentLevelNum);
+                    player.skin.setPosition(0, currentLevel.getGround(0.0, player.skin.getWidth()).getKey());
                 }
 
                 double offsetlandX = player.skin.getPositionX() - (width >> 1);
                 double offsetlandY = player.skin.getPositionY() - (height >> 1);
                 if (offsetlandX < 0) offsetlandX = 0;
-                if (offsetlandX > currentLevel.getSizeX()-512) offsetlandX = currentLevel.getSizeX()-width;
+                if (offsetlandX > currentLevel.getSizeX()-800) offsetlandX = currentLevel.getSizeX()-width;
                 if (offsetlandY < 0) offsetlandY = 0;
-                if (offsetlandY > currentLevel.getSizeY()-512) offsetlandY = currentLevel.getSizeY()-height;
+                if (offsetlandY > currentLevel.getSizeY()-600) offsetlandY = currentLevel.getSizeY()-height;
 
                 // background image clears canvas;
                 gc.drawImage(background0,0,0);

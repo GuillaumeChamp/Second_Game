@@ -14,7 +14,7 @@ public class Player {
         skin = new PlayerSkin(x, y, width, height);
         skin.setMass(mass);
         skin.setDuration(0.1);
-        skin.setPosition(x, currentLevel.getGround((double)x) - height);
+        skin.setPosition(x, currentLevel.getGround((double)x, width).getKey() - height);
         location = currentLevel;
     }
 

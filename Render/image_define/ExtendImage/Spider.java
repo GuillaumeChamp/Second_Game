@@ -11,7 +11,7 @@ public class Spider extends MovingAnimatedImage {
     private int speed;
     private int yLow;
     private int yHigh;
-    public Image spiderImage[];
+    public Image[] spiderImage;
 
     public Spider(int x, int y, int width, int height, Level currentLevel) {
         super(x, y, width, height);
@@ -22,9 +22,9 @@ public class Spider extends MovingAnimatedImage {
         spiderImage[0] = new Image("resources/spider/spider.png");
         this.setFrames(spiderImage);
 
-        this.yLow = currentLevel.getGround((double)x) - height;
+        this.yLow = currentLevel.getGround((double)x, width).getKey() - height;
         this.yHigh = 0;
-        this.setPosition(x, currentLevel.getGround((double)x) - height);
+        this.setPosition(x, currentLevel.getGround((double)x, width).getKey() - height);
     }
 
     public void setXLimit(int xStart, int xEnd) {

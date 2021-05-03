@@ -5,9 +5,9 @@ import image_define.Level;
 import image_define.MovingAnimatedImage;
 
 public class PlayerSkin extends MovingAnimatedImage {
-    public Image playerLeft[];
-    public Image playerRight[];
-    public Image playerStopped[];
+    public Image[] playerLeft;
+    public Image[] playerRight;
+    public Image[] playerStopped;
 
     public PlayerSkin(int x, int y, int w, int h) {
         super(x, y, w, h);
@@ -39,8 +39,8 @@ public class PlayerSkin extends MovingAnimatedImage {
             positionY=0;
             velocityY=-velocityY/5;
         }
-        if (positionY > location.getGround(this.getPositionX()) - this.getHeight()) {
-            positionY = location.getGround(this.getPositionX()) - this.getHeight();
+        if (positionY > location.getGround(this.getPositionX(), this.getWidth()).getKey() - this.getHeight()) {
+            positionY = location.getGround(this.getPositionX(), this.getWidth()).getKey() - this.getHeight();
             velocityY=-velocityY/5;
         }
         if (positionX<0) {
@@ -52,7 +52,7 @@ public class PlayerSkin extends MovingAnimatedImage {
             velocityX=-velocityX/5;
         }
         // unable to climb without jumping.
-        if ((int)oldY > location.getGround(positionX) - this.getHeight()) {
+        if ((int)oldY > location.getGround(positionX, this.getWidth()).getKey() - this.getHeight()) {
             positionX = oldX;
             positionY = oldY;
             velocityX = 0;
@@ -61,7 +61,7 @@ public class PlayerSkin extends MovingAnimatedImage {
         if (Math.abs(velocityX) < 0.2) {
             velocityX=0;
             this.setFrames(stopped);
-            positionY = location.getGround(positionX) - this.getHeight();
+            positionY = location.getGround(positionX, this.getWidth()).getKey() - this.getHeight();
         } else if (velocityX < 0) {
             this.setFrames(left);
         } else {

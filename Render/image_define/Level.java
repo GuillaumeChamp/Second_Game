@@ -11,8 +11,9 @@ import java.util.ArrayList;
 public class Level implements DefineLevel {
     private javafx.scene.image.Image background;
     private ArrayList<Pair<Integer, Integer>> levelDescription;
-    private final double sizeX;
-    private final double sizeY;
+    private ArrayList<Integer> iceDescription = new ArrayList<>();
+    private double sizeX;
+    private double sizeY;
     public ArrayList<image_define.MovingAnimatedImage> enemies = new ArrayList<>();
 
     public Level(long width, long height){
@@ -28,6 +29,10 @@ public class Level implements DefineLevel {
         this.levelDescription = levelDescription;
     }
 
+    public void setIceDescription(ArrayList<Integer> iceDescription) {
+        this.iceDescription = iceDescription;
+    }
+
     public double getSizeX() {
         return sizeX;
     }
@@ -40,15 +45,47 @@ public class Level implements DefineLevel {
         return background;
     }
 
-    public Integer getGround(Double currentX) {
+    public Pair<Integer, Boolean> getGround(Double currentX, Integer width) {
         for (int i = levelDescription.size() - 1; i >= 0; i--) {
-            if (levelDescription.get(i).getKey() <= currentX) {
-                return levelDescription.get(i).getValue();
+            int curHeight = levelDescription.get(i).getValue();
+            int prevHeight = (int) sizeY;
+            int nextHeight = (int) sizeY;
+
+            int curStartX = levelDescription.get(i).getKey();
+            int leftBorder = curStartX - width;
+            int curEndX = (int) sizeX - width;
+            int rightBorder = curEndX + width;
+            if (i > 0) {
+                prevHeight = levelDescription.get(i - 1).getValue();
+            }
+            if (i < levelDescription.size() - 1) {
+                nextHeight = levelDescription.get(i + 1).getValue();
+                curEndX = levelDescription.get(i + 1).getKey() - width;
+                rightBorder = curEndX + width;
+            }
+            if (leftBorder <= currentX && currentX < curStartX) {
+                if (prevHeight > curHeight) {
+                    boolean onIce = iceDescription.contains(curStartX);
+                    return new Pair<>(curHeight, onIce);
+                }
+            } else if (curStartX <= currentX && currentX <= curEndX) {
+                boolean onIce = iceDescription.contains(curStartX);
+                return new Pair<>(curHeight, onIce);
+            } else if (curEndX < currentX && currentX < rightBorder) {
+                if (nextHeight > curHeight) {
+                    boolean onIce = iceDescription.contains(curStartX);
+                    return new Pair<>(curHeight, onIce);
+                }
             }
         }
-        return (int) sizeY;
+        return new Pair<>((int) sizeY, false);
     }
 
+    public void Resize(){
+        this.sizeX=background.getWidth();
+        this.sizeY=background.getHeight();
+
+    }
     public void updateLevel(double time) {
         for (image_define.MovingAnimatedImage enemy : enemies) {
             enemy.update(time);
