@@ -21,6 +21,9 @@ public interface DefineLevel {
             case 1:
                 Level1(currentLevel);
                 break;
+            case 2:
+                Level2(currentLevel);
+                break;
             default:
                 Level0(currentLevel);
                 break;
@@ -75,5 +78,20 @@ public interface DefineLevel {
         spider1.setXLimit(100, 200);
         currentLevel.enemies.add(spider1);
 
+    }
+    static void Level2(Level currentLevel){
+        String imageUrl = "resources/Level/Level_2_fire_V1.png";
+        //Define the ground of the level
+        ArrayList<Pair<Integer, Integer>> levelDescription = new ArrayList<>(Arrays.asList(
+                new Pair<>(0, 30),
+                new Pair<>(205,436),
+                new Pair<>(277,467),
+                new Pair<>(426,500),
+                new Pair<>(501,534)
+        ));
+        currentLevel.setBackground(new javafx.scene.image.Image(imageUrl));
+        currentLevel.setLevelDescription(levelDescription);
+        currentLevel.Resize();
+        currentLevel.enemies = new ArrayList<>();
     }
 }
