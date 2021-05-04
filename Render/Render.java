@@ -16,7 +16,6 @@ public class Render extends Application {
     SoundBackground music= new SoundBackground();
     Integer iceFire = 0;
     Integer currentLevelNum = 0;
-    //DefineLevel defineLevel = new DefineLevel();
 
     public void start(Stage theStage) {
         theStage.setTitle("Stony Journey");

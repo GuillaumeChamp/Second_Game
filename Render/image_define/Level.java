@@ -49,12 +49,6 @@ public class Level implements DefineLevel {
     public double getSizeY() {
         return sizeY;
     }
-    /* No longer used
-    public Image getBackground() {
-        return background;
-    }
-
-     */
 
     /**
      * function to detect where the player can stand

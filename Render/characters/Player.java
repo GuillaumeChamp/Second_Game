@@ -6,7 +6,6 @@ import image_define.Level;
 public class Player {
     public PlayerSkin skin;
     public Level location;
-    //public State state; to add statue to the player (example : frozen,slow)
     public boolean onFireSide = true;
     public boolean nextLevel = false;
 
