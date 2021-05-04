@@ -29,7 +29,7 @@ public class MovingAnimatedImage implements java.io.Serializable{
 		this.velocityX = 0;
 		this.velocityY = 0;
 		this.mass = 40;
-		this.gravity = 3;
+		this.gravity = 10;
 		this.friction = 3.33;
 	}
 
@@ -48,6 +48,8 @@ public class MovingAnimatedImage implements java.io.Serializable{
 	public double getPositionY() {
 		return positionY;
 	}
+
+	public void setFriction(double friction){this.friction=friction;}
 
 	public void setPosition(double x, double y) {
 		positionX = x;
@@ -84,7 +86,10 @@ public class MovingAnimatedImage implements java.io.Serializable{
 		this.mass = mass;
 	}
 
+	/**
+	 * This methode will be override to each entity
+	 * @param time might be use for the physic
+	 */
 	public void update(double time) {
-		return;
 	}
 }

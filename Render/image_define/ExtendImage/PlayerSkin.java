@@ -18,8 +18,14 @@ public class PlayerSkin extends MovingAnimatedImage {
         for (int i=0;i<2;i++) playerRight[i]=new Image("resources/player/right" +(i+1)+".png");
         for (int i=0;i<1;i++) playerStopped[i]=new Image("resources/player/mid.png");
         this.setFrames(playerStopped);
+        this.setFriction(0.8);
     }
 
+    /**
+     * Make the player move with the basic physic
+     * @param time not used (might be remove latter)
+     * @param location current Level (where the player is)
+     */
     public void update(double time, Level location) {
         Image[] left = playerLeft;
         Image[] right = playerRight;
@@ -32,6 +38,9 @@ public class PlayerSkin extends MovingAnimatedImage {
 
         velocityX = velocityX+accelerationX;
         velocityY = velocityY+accelerationY;
+        if (Math.abs(velocityX)<0.1) velocityX = 0; accelerationX=0;
+        if (Math.abs(velocityX)>10) velocityX=10;
+        if (Math.abs(velocityY)>8) velocityY=8;
 
         positionY += velocityY;
         positionX += velocityX;
@@ -58,8 +67,7 @@ public class PlayerSkin extends MovingAnimatedImage {
             velocityX = 0;
         }
 
-        if (Math.abs(velocityX) < 0.2) {
-            velocityX=0;
+        if (Math.abs(velocityX) < 0.2 && Math.abs(velocityY)< 0.1) {
             this.setFrames(stopped);
             positionY = location.getGround(positionX, this.getWidth()).getKey() - this.getHeight();
         } else if (velocityX < 0) {
