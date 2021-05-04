@@ -16,11 +16,20 @@ public class Level implements DefineLevel {
     private double sizeY;
     public ArrayList<image_define.MovingAnimatedImage> enemies = new ArrayList<>();
 
+    /**
+     * Create a new Level with the selected limits
+     * @param width  width of the Level
+     * @param height height of the Level
+     */
     public Level(long width, long height){
         this.sizeY = height;
         this.sizeX = width;
     }
 
+    /**
+     * Set the foreground of the Level
+     * @param background the new picture
+     */
     public void setBackground(javafx.scene.image.Image background) {
         this.background = background;
     }
@@ -40,11 +49,19 @@ public class Level implements DefineLevel {
     public double getSizeY() {
         return sizeY;
     }
-
+    /* No longer used
     public Image getBackground() {
         return background;
     }
 
+     */
+
+    /**
+     * function to detect where the player can stand
+     * @param currentX localisation of the player
+     * @param width size of the player
+     * @return Array list of all possible place to stand
+     */
     public Pair<Integer, Boolean> getGround(Double currentX, Integer width) {
         for (int i = levelDescription.size() - 1; i >= 0; i--) {
             int curHeight = levelDescription.get(i).getValue();

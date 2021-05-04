@@ -13,6 +13,14 @@ public class Spider extends MovingAnimatedImage {
     private int yHigh;
     public Image[] spiderImage;
 
+    /**
+     * Define a new spider entity
+     * @param x starting x position
+     * @param y starting y position
+     * @param width width of the spider
+     * @param height height of the spider
+     * @param currentLevel active Level
+     */
     public Spider(int x, int y, int width, int height, Level currentLevel) {
         super(x, y, width, height);
         this.groundOnly = true;
@@ -27,11 +35,19 @@ public class Spider extends MovingAnimatedImage {
         this.setPosition(x, currentLevel.getGround((double)x, width).getKey() - height);
     }
 
+    /**
+     * Define the range of movement of the spider
+     * @param xStart minimum x of the patrol range
+     * @param xEnd maximum x of the patrol range
+     */
     public void setXLimit(int xStart, int xEnd) {
         this.xStart = xStart;
         this.xEnd = xEnd;
     }
 
+    /**
+     * Switch the behavior of the spider (up and down or right and left)
+     */
     public void setGroundOnly() {
         this.groundOnly = !this.groundOnly;
     }
