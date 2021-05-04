@@ -35,7 +35,7 @@ public class Render extends Application {
 
         Level currentLevel = new Level(width, height);
         currentLevel.modifyLevel(currentLevel, currentLevelNum);
-        Player player = new Player(10,0,40,60, 40, currentLevel);
+        Player player = new Player(10,0,30,60, 40, currentLevel);
         theScene.setOnKeyPressed(e -> {
                     String code = e.getCode().toString();
                     if (!input.contains(code))
@@ -65,7 +65,7 @@ public class Render extends Application {
                 }
                 if (input.contains("UP")) {
                     if (player.skin.getPositionY() > (currentLevel.getGround(player.skin.getPositionX(), player.skin.getWidth()).getKey() - 1.5*player.skin.getHeight())) {
-                        player.skin.addForces(0, -10);
+                        player.skin.addForces(0, -20);
                     }
                 }
                 if (input.contains("C")) {
