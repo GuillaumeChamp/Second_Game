@@ -2,6 +2,7 @@ import java.util.ArrayList;
 import characters.Player;
 import javafx.application.Application;
 import javafx.scene.image.Image;
+import javafx.scene.input.KeyCode;
 import javafx.stage.*;
 import javafx.scene.*;
 import javafx.scene.canvas.*;
@@ -18,9 +19,10 @@ public class Render extends Application {
     Integer currentLevelNum = 0;
 
     public void start(Stage theStage) {
+        //TODO : make the start menu
         theStage.setTitle("Stony Journey");
         music.start(theStage);
-        ArrayList<String> input = new ArrayList<>(); //store the keyboard input
+        ArrayList<KeyCode> input = new ArrayList<>(); //store the keyboard input
 
         Group root = new Group();
         Scene theScene = new Scene(root);
@@ -36,16 +38,25 @@ public class Render extends Application {
         currentLevel.modifyLevel(currentLevel, currentLevelNum);
         Player player = new Player(10,0,30,60, 40, currentLevel);
         theScene.setOnKeyPressed(e -> {
-                    String code = e.getCode().toString();
+                    KeyCode code = e.getCode();
                     if (!input.contains(code))
                         input.add(code);
+                    if (code==KeyCode.C){
+                        iceFire = (iceFire + 1) % 2;
+                        currentLevel.modifyLevel(currentLevel, currentLevelNum+iceFire);
+                        Pair<Integer, Boolean> groundDes = currentLevel.getGround(player.skin.getPositionX(), player.skin.getWidth());
+                        player.skin.setPosition(player.skin.getPositionX(), groundDes.getKey());
+                        currentLevel.setGroundOnly();
+                        player.onFireSide = iceFire != 1;
+                    }
                 }
         );
 
         theScene.setOnKeyReleased(e -> {
-            String code = e.getCode().toString();
+            KeyCode code = e.getCode();
             input.remove(code);
         });
+        //Todo : make a better load (may passed by a rename)
         Image background0 = new Image( "resources/Level/Background/CloudsBack.png" );
         Image background1 = new Image( "resources/Level/Background/CloudsFront.png" );
         Image background2 = new Image( "resources/Level/Background/BGBack.png" );
@@ -56,33 +67,18 @@ public class Render extends Application {
 
                 player.skin.setForceX(0);
                 player.skin.setForceY(0);
-                if (input.contains("LEFT")) {
+                if (input.contains(KeyCode.LEFT)) {
                     player.skin.addForces(-10,0);
                 }
-                if (input.contains("RIGHT")) {
+                if (input.contains(KeyCode.RIGHT)) {
                     player.skin.addForces(10, 0);
                 }
-                if (input.contains("UP")) {
+                if (input.contains(KeyCode.UP)) {
                     if (player.skin.getPositionY() > (currentLevel.getGround(player.skin.getPositionX(), player.skin.getWidth()).getKey() - 1.5*player.skin.getHeight())) {
                         player.skin.addForces(0, -20);
                     }
                 }
-                if (input.contains("C")) {
-                    iceFire = (iceFire + 1) % 2;
-                    //System.out.println(currentLevelNum);
-                    //System.out.println(iceFire);
-                    currentLevel.modifyLevel(currentLevel, currentLevelNum+iceFire);
-                    Pair<Integer, Boolean> groundDes = currentLevel.getGround(player.skin.getPositionX(), player.skin.getWidth());
-                    player.skin.setPosition(player.skin.getPositionX(), groundDes.getKey());
-                    input.remove("C");
-                    currentLevel.setGroundOnly();
-                    player.onFireSide = iceFire != 1;
-                }
-                /*if (input.contains("S")) {
-                    currentLevel.setGroundOnly();
-                    input.remove("S");
-                }
-                 */
+
                 player.updateSkin(t);
                 currentLevel.updateLevel(t);
 
@@ -90,18 +86,17 @@ public class Render extends Application {
                     currentLevelNum = (currentLevelNum + 2) % 4;
                     currentLevel.modifyLevel(currentLevel, currentLevelNum);
                     player.nextLevel = false;
-                    //System.out.println(currentLevelNum);
                     player.skin.setPosition(0, currentLevel.getGround(0.0, player.skin.getWidth()).getKey());
                 }
 
                 double offsetlandX = player.skin.getPositionX() - (width >> 1);
                 double offsetlandY = player.skin.getPositionY() - (height >> 1);
                 if (offsetlandX < 0) offsetlandX = 0;
-                if (offsetlandX > currentLevel.getSizeX()-800) offsetlandX = currentLevel.getSizeX()-width;
+                if (offsetlandX > currentLevel.getSizeX()-width) offsetlandX = currentLevel.getSizeX()-width;
                 if (offsetlandY < 0) offsetlandY = 0;
-                if (offsetlandY > currentLevel.getSizeY()-600) offsetlandY = currentLevel.getSizeY()-height;
+                if (offsetlandY > currentLevel.getSizeY()-height) offsetlandY = currentLevel.getSizeY()-height;
 
-                // background image clears canvas;
+                //for (int i=0; i=3;i++) gc.drawImage((background[i]));
                 gc.drawImage(background0,0,0);
                 gc.drawImage(background1,0,0);
                 gc.drawImage(background2,0,0);

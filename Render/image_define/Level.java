@@ -2,7 +2,6 @@ package image_define;
 
 import image_define.Levels.DefineLevel;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.image.Image;
 import javafx.util.Pair;
 import image_define.ExtendImage.Spider;
 

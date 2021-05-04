@@ -18,9 +18,8 @@ public class Player {
     }
 
     public void updateSkin(double time) {
-        this.skin.update(time, this.location);
-        if (this.skin.getPositionX() >= this.location.getSizeX() - 1.1 * this.skin.getWidth()) {
-            this.nextLevel = true;
-        }
+        this.skin.update(time, this.location, this.onFireSide);
+        boolean end = this.skin.getPositionX() >= this.location.getSizeX() - 1.1 * this.skin.getWidth();
+        if (end)  this.nextLevel = true;
     }
 }

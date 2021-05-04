@@ -26,7 +26,7 @@ public class PlayerSkin extends MovingAnimatedImage {
      * @param time not used (might be remove latter)
      * @param location current Level (where the player is)
      */
-    public void update(double time, Level location) {
+    public void update(double time, Level location,boolean onFireSide) {
         Image[] left = playerLeft;
         Image[] right = playerRight;
         Image[] stopped = playerStopped;
@@ -61,6 +61,7 @@ public class PlayerSkin extends MovingAnimatedImage {
             velocityX=-velocityX/5;
         }
         // unable to climb without jumping.
+        //fixme : unable to jump while pressing left or right key
         if ((int)oldY > location.getGround(positionX, this.getWidth()).getKey() - this.getHeight()) {
             positionX = oldX;
             positionY = oldY;
@@ -75,5 +76,13 @@ public class PlayerSkin extends MovingAnimatedImage {
         } else {
             this.setFrames(right);
         }
+//Todo make the code here more readable
+        if (!onFireSide && location.getGround(positionX, this.getWidth()).getValue()) {
+            //set friction when on ice
+            this.setFriction(10);
+        } else {
+            this.setFriction(1);
+        }
+
     }
 }

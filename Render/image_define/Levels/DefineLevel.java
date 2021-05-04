@@ -7,6 +7,8 @@ import image_define.Level;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+//TODO : make a level loader from files
+
 public interface DefineLevel {
     /**
      * Swap the currentLevel to the next level
@@ -53,7 +55,7 @@ public interface DefineLevel {
         currentLevel.Resize();
         currentLevel.enemies = new ArrayList<>();
     }
-
+    //Fixme : When switching the spider position is reset (don't reset the enemies list while switching)
     /**
      * build the level1 including spiders and collision
      * @param currentLevel active level which will be update to become level1
