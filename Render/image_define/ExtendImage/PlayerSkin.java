@@ -60,8 +60,7 @@ public class PlayerSkin extends MovingAnimatedImage {
             positionX = location.getSizeX() - this.getWidth();
             velocityX=-velocityX/5;
         }
-        // unable to climb without jumping.
-        //fixme : unable to jump while pressing left or right key front to a wall
+        //fixme : unable to jump while pressing left or right and jump key in front of a wall
         if ((int)oldY > location.getGround(positionX, this.getWidth()).getKey() - this.getHeight()) {
             positionX = oldX;
             positionY = oldY;
@@ -76,13 +75,12 @@ public class PlayerSkin extends MovingAnimatedImage {
         } else {
             this.setFrames(right);
         }
-//Todo make the code here more readable
+    //Todo make the code here more readable
         if (!onFireSide && location.getGround(positionX, this.getWidth()).getValue()) {
             //set friction when on ice
             this.setFriction(10);
         } else {
             this.setFriction(1);
         }
-
     }
 }

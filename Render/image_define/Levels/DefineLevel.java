@@ -15,6 +15,7 @@ public interface DefineLevel {
      * @param currentLevel Active level (might be modify to be include in Level.java)
      * @param choice id of the next level
      */
+    //TODO : Change the way the ground is define to alloy several layer define (use a triple instead)
     default void modifyLevel(Level currentLevel, Integer choice) {
         switch (choice) {
             case 0:
@@ -41,7 +42,6 @@ public interface DefineLevel {
      */
     static void LevelEntry(Level currentLevel) {
         String imageUrl = "resources/Level/Level_0_V1.png";
-
         //Define the ground of the level
         ArrayList<Pair<Integer, Integer>> levelDescription = new ArrayList<>(Arrays.asList(
                 new Pair<>(0, 30),
@@ -84,9 +84,7 @@ public interface DefineLevel {
         Spider spider1 = new Spider(100, 0, 20, 20, currentLevel);
         spider1.setXLimit(100, 200);
         currentLevel.enemies.add(spider1);
-
     }
-
     /**
      * build the level1 including spiders and collision
      * @param currentLevel active level which will be update to become level1

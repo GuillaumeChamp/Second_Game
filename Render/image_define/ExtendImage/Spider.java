@@ -66,24 +66,14 @@ public class Spider extends MovingAnimatedImage {
                 this.speed = -this.speed;
             }
         } else {
-            if (this.getPositionX() >= this.xEnd) {
-                this.setPosition(this.xEnd, this.getPositionY() + this.speed);
-                if (this.getPositionY() >= this.yLow) {
-                    this.speed = -this.speed;
-                    this.setPosition(this.xEnd, this.yLow);
-                }
-
-                if (this.getPositionY() <= this.yHigh) {
-                    this.speed = -this.speed;
-                    this.setPosition(this.xEnd, this.yHigh);
-                }
-            } else {
-                this.setPosition(this.getPositionX()+this.speed, this.yLow);
-
-                if (this.getPositionX() < this.xStart) {
-                    this.setPosition(this.xStart, this.getPositionY());
-                    this.speed = -this.speed;
-                }
+            this.setPosition(this.getPositionX(), this.getPositionY() + this.speed);
+            if (this.getPositionY() >= this.yLow) {
+                this.speed = -this.speed;
+                this.setPosition(this.getPositionX(), this.yLow);
+            }
+            if (this.getPositionY() <= this.yHigh) {
+                this.speed = -this.speed;
+                this.setPosition(this.getPositionX(), this.yHigh);
             }
         }
     }
