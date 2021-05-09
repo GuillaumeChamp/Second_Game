@@ -3,6 +3,7 @@ package image_define.ExtendImage;
 import image_define.Level;
 import image_define.MovingAnimatedImage;
 import javafx.scene.image.Image;
+import javafx.util.Pair;
 
 public class Spider extends MovingAnimatedImage {
     private int xStart;
@@ -45,11 +46,18 @@ public class Spider extends MovingAnimatedImage {
         this.xEnd = xEnd;
     }
 
+    public boolean isGroundOnly() {
+        return groundOnly;
+    }
+
     /**
      * Switch the behavior of the spider (up and down or right and left)
      */
     public void setGroundOnly() {
         this.groundOnly = !this.groundOnly;
+    }
+    public Web putweb(){
+        return new Web(this.getPositionX(),this.getPositionY(),this.getWidth(),this.yHigh);
     }
 
     @Override

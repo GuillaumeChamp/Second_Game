@@ -4,6 +4,7 @@ import image_define.Levels.DefineLevel;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.util.Pair;
 import image_define.ExtendImage.Spider;
+import image_define.ExtendImage.Web;
 
 import java.util.ArrayList;
 
@@ -11,6 +12,7 @@ public class Level implements DefineLevel {
     private javafx.scene.image.Image background;
     private ArrayList<Pair<Integer, Integer>> levelDescription;
     private ArrayList<Integer> iceDescription = new ArrayList<>();
+    private ArrayList<Web> ladder= new ArrayList<>();
     private double sizeX;
     private double sizeY;
     public ArrayList<image_define.MovingAnimatedImage> enemies = new ArrayList<>();
@@ -103,10 +105,15 @@ public class Level implements DefineLevel {
     }
 
     public void setGroundOnly() {
+        ArrayList<Web> newladder = new ArrayList<>();
         for (image_define.MovingAnimatedImage enemy : enemies) {
             if (enemy instanceof Spider) {
                 ((Spider)enemy).setGroundOnly();
+                if (!((Spider) enemy).isGroundOnly()) {
+                    newladder.add(((Spider) enemy).putweb());
+                }
             }
+            this.ladder=newladder;
         }
     }
 
@@ -116,6 +123,12 @@ public class Level implements DefineLevel {
             double offsetEnemy = enemy.getPositionX() - offsetLandX;
             if (offsetEnemy > 0 && offsetEnemy < sizeX) {
                 gc.drawImage(enemy.getFrame(time), offsetEnemy, enemy.getPositionY(), enemy.getWidth(), enemy.getHeight());
+            }
+        }
+        for (image_define.MovingAnimatedImage web : ladder){
+            double offsetweb = web.getPositionX() - offsetLandX;
+            if (offsetweb > 0 && offsetweb < sizeX) {
+                gc.drawImage(web.getFrame(time), offsetweb, web.getPositionY(), web.getWidth(), web.getHeight());
             }
         }
     }

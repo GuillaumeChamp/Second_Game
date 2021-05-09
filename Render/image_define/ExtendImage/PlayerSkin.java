@@ -20,7 +20,6 @@ public class PlayerSkin extends MovingAnimatedImage {
         this.setFrames(playerStopped);
         this.setFriction(0.8);
     }
-
     /**
      * Make the player move with the basic physic
      * @param time not used (might be remove latter)
@@ -66,7 +65,6 @@ public class PlayerSkin extends MovingAnimatedImage {
             positionY = oldY;
             velocityX = 0;
         }
-
         if (Math.abs(velocityX) < 0.2 && Math.abs(velocityY)< 0.1) {
             this.setFrames(stopped);
             positionY = location.getGround(positionX, this.getWidth()).getKey() - this.getHeight();

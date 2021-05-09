@@ -86,6 +86,7 @@ public class Render extends Application {
 
                 if (player.nextLevel) {
                     currentLevelNum = (currentLevelNum + 2) % 4;
+                    iceFire=0;
                     currentLevel.modifyLevel(currentLevel, currentLevelNum);
                     player.nextLevel = false;
                     player.skin.setPosition(0, currentLevel.getGround(0.0, player.skin.getWidth()).getKey());
