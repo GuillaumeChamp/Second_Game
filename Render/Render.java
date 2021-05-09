@@ -42,8 +42,10 @@ public class Render extends Application {
                     if (!input.contains(code))
                         input.add(code);
                     if (code==KeyCode.C){
+                        ArrayList<image_define.MovingAnimatedImage> oldenemies = currentLevel.enemies;
                         iceFire = (iceFire + 1) % 2;
                         currentLevel.modifyLevel(currentLevel, currentLevelNum+iceFire);
+                        currentLevel.enemies = oldenemies;
                         Pair<Integer, Boolean> groundDes = currentLevel.getGround(player.skin.getPositionX(), player.skin.getWidth());
                         player.skin.setPosition(player.skin.getPositionX(), groundDes.getKey());
                         currentLevel.setGroundOnly();

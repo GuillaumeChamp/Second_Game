@@ -61,7 +61,7 @@ public class PlayerSkin extends MovingAnimatedImage {
             velocityX=-velocityX/5;
         }
         // unable to climb without jumping.
-        //fixme : unable to jump while pressing left or right key
+        //fixme : unable to jump while pressing left or right key front to a wall
         if ((int)oldY > location.getGround(positionX, this.getWidth()).getKey() - this.getHeight()) {
             positionX = oldX;
             positionY = oldY;

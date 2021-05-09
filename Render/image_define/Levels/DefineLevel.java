@@ -55,7 +55,6 @@ public interface DefineLevel {
         currentLevel.Resize();
         currentLevel.enemies = new ArrayList<>();
     }
-    //Fixme : When switching the spider position is reset (don't reset the enemies list while switching)
     /**
      * build the level1 including spiders and collision
      * @param currentLevel active level which will be update to become level1
