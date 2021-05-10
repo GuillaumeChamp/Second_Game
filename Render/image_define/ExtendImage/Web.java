@@ -10,7 +10,7 @@ public class Web extends MovingAnimatedImage {
         super((int)x, (int)y, width, height);
         webImage = new Image[1];
         //Todo : make a better picture for string web
-        webImage[0] = new Image("resources/spider/web.png",width,height,true,true);
+        webImage[0] = new Image("resources/spider/web.png",width,height,false,true);
         this.setFrames(webImage);
     }
 }

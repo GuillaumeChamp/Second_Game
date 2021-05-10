@@ -51,6 +51,7 @@ public class Render extends Application {
                         currentLevel.setGroundOnly();
                         player.onFireSide = iceFire != 1;
                     }
+                    if(code==KeyCode.R) System.out.println(player.skin.getPositionX() + " " + player.skin.getPositionY());
                 }
         );
 
@@ -76,7 +77,7 @@ public class Render extends Application {
                     player.skin.addForces(10, 0);
                 }
                 if (input.contains(KeyCode.UP)) {
-                    if (player.skin.getPositionY() > (currentLevel.getGround(player.skin.getPositionX(), player.skin.getWidth()).getKey() - 1.5*player.skin.getHeight())) {
+                    if (player.skin.getPositionY() > (currentLevel.getGround(player.skin.getPositionX(), player.skin.getWidth()).getKey() - 1.5*player.skin.getHeight()) ||player.location.thereisaladder(player.skin.getPositionX(),player.skin.getPositionY())) {
                         player.skin.addForces(0, -20);
                     }
                 }
@@ -90,6 +91,8 @@ public class Render extends Application {
                     currentLevel.modifyLevel(currentLevel, currentLevelNum);
                     player.nextLevel = false;
                     player.skin.setPosition(0, currentLevel.getGround(0.0, player.skin.getWidth()).getKey());
+                    //currentLevel.setGroundOnly(); maybe be useful for ice spider
+                    //currentLevel.setGroundOnly();
                 }
 
                 double offsetlandX = player.skin.getPositionX() - (width >> 1);

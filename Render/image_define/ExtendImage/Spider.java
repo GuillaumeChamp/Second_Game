@@ -57,7 +57,7 @@ public class Spider extends MovingAnimatedImage {
         this.groundOnly = !this.groundOnly;
     }
     public Web putweb(){
-        return new Web(this.getPositionX(),this.getPositionY(),this.getWidth(),this.yHigh);
+        return new Web(this.getPositionX(),this.yHigh,this.getWidth(),(int) this.getPositionY());
     }
 
     @Override

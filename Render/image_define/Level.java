@@ -6,6 +6,7 @@ import javafx.util.Pair;
 import image_define.ExtendImage.Spider;
 import image_define.ExtendImage.Web;
 
+import javafx.geometry.Rectangle2D;
 import java.util.ArrayList;
 
 public class Level implements DefineLevel {
@@ -93,6 +94,15 @@ public class Level implements DefineLevel {
         return new Pair<>((int) sizeY, false);
     }
 
+    public boolean thereisaladder(double X, double Y) {
+        boolean ans= false;
+        for (Web string : ladder){
+            Rectangle2D Hitbox = new Rectangle2D(string.getPositionX(),string.getPositionY(), string.getWidth(), string.getHeight());
+            if (Hitbox.contains(X,Y)) ans = true;
+        }
+        return ans;
+    }
+
     public void Resize(){
         this.sizeX=background.getWidth();
         this.sizeY=background.getHeight();
@@ -111,6 +121,7 @@ public class Level implements DefineLevel {
                 ((Spider)enemy).setGroundOnly();
                 if (!((Spider) enemy).isGroundOnly()) {
                     newladder.add(((Spider) enemy).putweb());
+                    System.out.println("new ladder at " + enemy.getPositionX() +" "+ enemy.getPositionY());
                 }
             }
             this.ladder=newladder;

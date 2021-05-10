@@ -19,8 +19,6 @@ public interface DefineLevel {
     default void modifyLevel(Level currentLevel, Integer choice) {
         switch (choice) {
             case 0:
-                LevelEntry(currentLevel);
-                break;
             case 1:
                 LevelEntry(currentLevel);
                 break;
@@ -30,6 +28,10 @@ public interface DefineLevel {
             case 3:
                 Level1_ice(currentLevel);
                 break;
+            case 4:
+                Level2_fire(currentLevel);
+            case 5:
+                Level2_ice(currentLevel);
             default:
                 LevelEntry(currentLevel);
                 break;
