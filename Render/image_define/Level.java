@@ -52,6 +52,11 @@ public class Level implements DefineLevel {
         return sizeY;
     }
 
+    public void clear(){
+        ladder= new ArrayList<>();
+        enemies= new ArrayList<>();
+    }
+
     /**
      * function to detect where the player can stand
      * @param currentX localisation of the player
@@ -121,7 +126,7 @@ public class Level implements DefineLevel {
                 ((Spider)enemy).setGroundOnly();
                 if (!((Spider) enemy).isGroundOnly()) {
                     newladder.add(((Spider) enemy).putweb());
-                    System.out.println("new ladder at " + enemy.getPositionX() +" "+ enemy.getPositionY());
+                    //System.out.println("new ladder at " + enemy.getPositionX() +" "+ enemy.getPositionY());
                 }
             }
             this.ladder=newladder;

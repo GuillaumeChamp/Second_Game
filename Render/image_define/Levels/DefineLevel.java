@@ -30,8 +30,10 @@ public interface DefineLevel {
                 break;
             case 4:
                 Level2_fire(currentLevel);
+                break;
             case 5:
                 Level2_ice(currentLevel);
+                break;
             default:
                 LevelEntry(currentLevel);
                 break;
@@ -106,12 +108,6 @@ public interface DefineLevel {
         currentLevel.setBackground(new javafx.scene.image.Image(imageUrl));
         currentLevel.setLevelDescription(levelDescription);
         currentLevel.Resize();
-        currentLevel.enemies = new ArrayList<>();
-
-        Spider spider1 = new Spider(100, 0, 20, 20, currentLevel);
-        spider1.setXLimit(100, 200);
-        currentLevel.enemies.add(spider1);
-
     }
 
     static void Level2_fire(Level currentLevel) {
@@ -119,16 +115,21 @@ public interface DefineLevel {
         ArrayList<Pair<Integer, Integer>> levelDescription = new ArrayList<>(Arrays.asList(
                 new Pair<>(0, 403),
                 new Pair<>(230, 514),
-                new Pair<>(1268,347)
+                new Pair<>(1268,346)
         ));
         currentLevel.setBackground(new javafx.scene.image.Image(imageUrl));
         currentLevel.setLevelDescription(levelDescription);
 
         currentLevel.enemies = new ArrayList<>();
 
-        Spider spider1 = new Spider(100, 0, 20, 20, currentLevel);
-        spider1.setXLimit(100, 200);
+        Spider spider1 = new Spider(350, 0, 40, 40, currentLevel);
+        spider1.setXLimit(350, 720);
         currentLevel.enemies.add(spider1);
+
+        Spider spider2 = new Spider(1100, 0, 20, 20, currentLevel);
+        spider2.setXLimit(1100, 1220);
+        currentLevel.enemies.add(spider2);
+
     }
 
     static void Level2_ice(Level currentLevel) {
@@ -136,19 +137,12 @@ public interface DefineLevel {
         ArrayList<Pair<Integer, Integer>> levelDescription = new ArrayList<>(Arrays.asList(
                 new Pair<>(0, 403),
                 new Pair<>(230, 514),
-                new Pair<>(1268,347)
+                new Pair<>(1268,346)
         ));
         currentLevel.setBackground(new javafx.scene.image.Image(imageUrl));
         currentLevel.setLevelDescription(levelDescription);
 
         currentLevel.enemies = new ArrayList<>();
 
-        Spider spider1 = new Spider(100, 0, 20, 20, currentLevel);
-        spider1.setXLimit(100, 200);
-        currentLevel.enemies.add(spider1);
-
-        Spider spider2 = new Spider(300, 0, 10, 10, currentLevel);
-        spider2.setXLimit(300, 350);
-        currentLevel.enemies.add(spider2);
     }
 }
