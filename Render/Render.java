@@ -8,7 +8,6 @@ import javafx.scene.*;
 import javafx.scene.canvas.*;
 import javafx.animation.AnimationTimer;
 import image_define.Level;
-import javafx.util.Pair;
 
 
 public class Render extends Application {
@@ -36,20 +35,13 @@ public class Render extends Application {
 
         Level currentLevel = new Level(width, height);
         currentLevel.modifyLevel(currentLevel, currentLevelNum);
-        Player player = new Player(10,0,30,60, 40, currentLevel);
+        Player player = new Player(210,436,30,60, 40, currentLevel);
         theScene.setOnKeyPressed(e -> {
                     KeyCode code = e.getCode();
                     if (!input.contains(code))
                         input.add(code);
                     if (code==KeyCode.C){
-                        ArrayList<image_define.MovingAnimatedImage> oldenemies = currentLevel.enemies;
-                        iceFire = (iceFire + 1) % 2;
-                        currentLevel.modifyLevel(currentLevel, currentLevelNum+iceFire);
-                        currentLevel.enemies = oldenemies;
-                        Pair<Integer, Boolean> groundDes = currentLevel.getGround(player.skin.getPositionX(), player.skin.getWidth());
-                        player.skin.setPosition(player.skin.getPositionX(), groundDes.getKey());
-                        currentLevel.setGroundOnly();
-                        player.onFireSide = iceFire != 1;
+                        currentLevel.swap();
                     }
                     if(code==KeyCode.R) System.out.println(player.skin.getPositionX() + " " + player.skin.getPositionY());
                 }
@@ -77,40 +69,35 @@ public class Render extends Application {
                     player.skin.addForces(10, 0);
                 }
                 if (input.contains(KeyCode.UP)) {
-                    if (player.skin.getPositionY() > (currentLevel.getGround(player.skin.getPositionX(), player.skin.getWidth()).getKey() - 1.5*player.skin.getHeight()) ||player.location.thereisaladder(player.skin.getPositionX(),player.skin.getPositionY())) {
-                        player.skin.addForces(0, -20);
-                    }
+                    if (player.CanJump()||player.location.ThereIsALadder(player.skin.getPositionX(),player.skin.getPositionY())) player.skin.addForces(0, -20);
                 }
-
-                player.updateSkin(t);
                 currentLevel.updateLevel(t);
+                player.updateSkin();
+
 
                 if (player.nextLevel) {
-                    currentLevelNum = (currentLevelNum + 2) % 6;
+                    currentLevelNum = (currentLevelNum + 1) % 3;
                     iceFire=0;
                     player.location.clear();
-                    currentLevel.modifyLevel(currentLevel, currentLevelNum);
                     player.nextLevel = false;
-                    player.skin.setPosition(0, currentLevel.getGround(0.0, player.skin.getWidth()).getKey());
-                    //currentLevel.setGroundOnly(); maybe be useful for ice spider
-                    //currentLevel.setGroundOnly();
+                    currentLevel.modifyLevel(currentLevel, currentLevelNum);
+                    player.skin.setPosition(0, player.skin.currentBlock(player.location, 0,player.skin.getPositionY()).getBlock().getMinY());
                 }
 
-                double offsetlandX = player.skin.getPositionX() - (width >> 1);
-                double offsetlandY = player.skin.getPositionY() - (height >> 1);
-                if (offsetlandX < 0) offsetlandX = 0;
-                if (offsetlandX > currentLevel.getSizeX()-width) offsetlandX = currentLevel.getSizeX()-width;
-                if (offsetlandY < 0) offsetlandY = 0;
-                if (offsetlandY > currentLevel.getSizeY()-height) offsetlandY = currentLevel.getSizeY()-height;
+                double OffSetLandX = player.skin.getPositionX() - (width >> 1);
+                double OffSetLandY = player.skin.getPositionY() - (height >> 1);
+                if (OffSetLandX < 0) OffSetLandX = 0;
+                if (OffSetLandX > currentLevel.getSizeX()-width) OffSetLandX = currentLevel.getSizeX()-width;
+                if (OffSetLandY < 0) OffSetLandY = 0;
+                if (OffSetLandY > currentLevel.getSizeY()-height) OffSetLandY = currentLevel.getSizeY()-height;
 
-                //for (int i=0; i=3;i++) gc.drawImage((background[i]));
                 gc.drawImage(background0,0,0);
                 gc.drawImage(background1,0,0);
                 gc.drawImage(background2,0,0);
                 gc.drawImage(background3,0,0);
-                currentLevel.drawLevel(gc, offsetlandX, offsetlandY, t);
+                currentLevel.drawLevel(gc, OffSetLandX, OffSetLandY, t);
                 Image playerIm = player.skin.getFrame(t);
-                gc.drawImage(playerIm, (int) player.skin.getPositionX() - offsetlandX, (int) player.skin.getPositionY()-offsetlandY, playerIm.getWidth() * (player.skin.getHeight() / playerIm.getHeight()), player.skin.getHeight());
+                gc.drawImage(playerIm, (int) player.skin.getPositionX() - OffSetLandX, (int) player.skin.getPositionY()-player.skin.getHeight()-OffSetLandY, playerIm.getWidth() * (player.skin.getHeight() / playerIm.getHeight()), player.skin.getHeight());
             }
         }.start();
         theStage.show();

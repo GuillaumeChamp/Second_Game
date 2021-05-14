@@ -2,8 +2,8 @@ package image_define.ExtendImage;
 
 import image_define.Level;
 import image_define.MovingAnimatedImage;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.image.Image;
-import javafx.util.Pair;
 
 public class Spider extends MovingAnimatedImage {
     private int xStart;
@@ -31,9 +31,9 @@ public class Spider extends MovingAnimatedImage {
         spiderImage[0] = new Image("resources/spider/spider.png");
         this.setFrames(spiderImage);
 
-        this.yLow = currentLevel.getGround((double)x, width).getKey() - height;
+        this.yLow =y;
         this.yHigh = 0;
-        this.setPosition(x, currentLevel.getGround((double)x, width).getKey() - height);
+        this.setPosition(x, yLow);
     }
 
     /**
@@ -49,7 +49,6 @@ public class Spider extends MovingAnimatedImage {
     public boolean isGroundOnly() {
         return groundOnly;
     }
-
     /**
      * Switch the behavior of the spider (up and down or right and left)
      */
@@ -59,7 +58,11 @@ public class Spider extends MovingAnimatedImage {
     public Web putweb(){
         return new Web(this.getPositionX(),this.yHigh,this.getWidth(),(int) this.getPositionY());
     }
-
+    public void Hit(MovingAnimatedImage target){
+        Rectangle2D spiderHitBox = new Rectangle2D(positionX,positionY,this.getWidth(),this.getHeight());
+        Rectangle2D targetHitBox = new Rectangle2D(target.getPositionX(),target.getPositionY(),target.getWidth(),target.getHeight());
+        if (spiderHitBox.intersects(targetHitBox))target.addForces(-20,20);
+    }
     @Override
     public void update(double time) {
         if (this.groundOnly) {

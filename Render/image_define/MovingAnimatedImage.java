@@ -1,10 +1,14 @@
 package image_define;
 
+import image_define.Levels.Block;
+import image_define.Levels.Water;
 import javafx.scene.image.Image;
 
+import java.util.ArrayList;
+
 public class MovingAnimatedImage implements java.io.Serializable{
-	private Integer width;
-	private Integer height;
+	private final Integer width;
+	private final Integer height;
 	protected double positionX;
 	protected double positionY;
 
@@ -81,6 +85,51 @@ public class MovingAnimatedImage implements java.io.Serializable{
         forceX += x;
         forceY += y;
     }
+
+	/**
+	 * Check if the position (x,y) is not on a wall of the level
+	 * @param location Level where the entity is
+	 * @param x x position checked
+	 * @param y y position checked
+	 * @return true if the entity can't move here
+	 */
+	public boolean unable_to_move(Level location,double x,double y){
+		boolean ans = false;
+		for (Block b : location.getBlocks()){
+			if (b.getBlock().contains(x,y-height,width,height)) ans = true;
+			if (b.getBlock().intersects(x,y-height,width,height)) ans =true;
+		}
+		return ans;
+	}
+
+	/**
+	 * Give the block under the point (x,y) in the Level location
+	 * @param location active level
+	 * @param x x coordinate of the point check
+	 * @param y y coordinate of the point check
+	 * @return the block
+	 */
+	public Block currentBlock(Level location,double x,double y){
+		ArrayList<Block> ground= new ArrayList<>();
+		if(!location.isFire)	ground.addAll(location.getIce());
+		ground.addAll(location.getBlocks());
+		for(Block b : ground){
+			if (b.getBlock().intersects(x,y,1,location.getSizeY()-y)) return b;
+		}
+		System.out.println("standing oob");
+		return null;
+	}
+
+	/**
+	 * Check if the moving animated image is on the ground
+	 * @param location current location of the entity
+	 * @return if the player is on the ground
+	 */
+	public boolean IsOnTheGround(Level location){
+		Block b =currentBlock(location,positionX,positionY);
+		double groundLevel = b.getBlock().getMinY();
+		return (positionY >  groundLevel- 1);
+	}
 
 	public void setMass(double mass) {
 		this.mass = mass;

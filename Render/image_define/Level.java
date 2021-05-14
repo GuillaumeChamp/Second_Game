@@ -1,22 +1,28 @@
 package image_define;
 
+import image_define.Levels.Block;
 import image_define.Levels.DefineLevel;
+import image_define.Levels.Water;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.util.Pair;
 import image_define.ExtendImage.Spider;
 import image_define.ExtendImage.Web;
 
 import javafx.geometry.Rectangle2D;
+import javafx.scene.image.Image;
+
 import java.util.ArrayList;
 
 public class Level implements DefineLevel {
-    private javafx.scene.image.Image background;
-    private ArrayList<Pair<Integer, Integer>> levelDescription;
-    private ArrayList<Integer> iceDescription = new ArrayList<>();
+    public boolean isFire=true;
+    private javafx.scene.image.Image iceBackground;
+    private javafx.scene.image.Image fireBackground;
+    private ArrayList<Block> blocks = new ArrayList<>();
+    private ArrayList<Water> ice = new ArrayList<>();
     private ArrayList<Web> ladder= new ArrayList<>();
     private double sizeX;
     private double sizeY;
     public ArrayList<image_define.MovingAnimatedImage> enemies = new ArrayList<>();
+    private String tips = "";
 
     /**
      * Create a new Level with the selected limits
@@ -29,19 +35,33 @@ public class Level implements DefineLevel {
     }
 
     /**
-     * Set the foreground of the Level
-     * @param background the new picture
+     * Load to this level the background
+     * @param fire background of the fire side
+     * @param ice background of the ice side
      */
-    public void setBackground(javafx.scene.image.Image background) {
-        this.background = background;
+    public void setBackground(Image fire,Image ice){
+        iceBackground=ice;
+        fireBackground=fire;
     }
 
-    public void setLevelDescription(ArrayList<Pair<Integer, Integer>> levelDescription) {
-        this.levelDescription = levelDescription;
+    public void setTips(String tips) {
+        this.tips = tips;
     }
 
-    public void setIceDescription(ArrayList<Integer> iceDescription) {
-        this.iceDescription = iceDescription;
+    public void setBlocks(ArrayList<Block> blocks) {
+        this.blocks = blocks;
+    }
+
+    public ArrayList<Block> getBlocks() {
+        return blocks;
+    }
+
+    public void setIce(ArrayList<Water> ice) {
+        this.ice = ice;
+    }
+
+    public ArrayList<Water> getIce() {
+        return ice;
     }
 
     public double getSizeX() {
@@ -55,62 +75,21 @@ public class Level implements DefineLevel {
     public void clear(){
         ladder= new ArrayList<>();
         enemies= new ArrayList<>();
+        isFire=true;
     }
 
-    /**
-     * function to detect where the player can stand
-     * @param currentX localisation of the player
-     * @param width size of the player
-     * @return Array list of all possible place to stand
-     */
-    public Pair<Integer, Boolean> getGround(Double currentX, Integer width) {
-        for (int i = levelDescription.size() - 1; i >= 0; i--) {
-            int curHeight = levelDescription.get(i).getValue();
-            int prevHeight = (int) sizeY;
-            int nextHeight = (int) sizeY;
-
-            int curStartX = levelDescription.get(i).getKey();
-            int leftBorder = curStartX - width;
-            int curEndX = (int) sizeX - width;
-            int rightBorder = curEndX + width;
-            if (i > 0) {
-                prevHeight = levelDescription.get(i - 1).getValue();
-            }
-            if (i < levelDescription.size() - 1) {
-                nextHeight = levelDescription.get(i + 1).getValue();
-                curEndX = levelDescription.get(i + 1).getKey() - width;
-                rightBorder = curEndX + width;
-            }
-            if (leftBorder <= currentX && currentX < curStartX) {
-                if (prevHeight > curHeight) {
-                    boolean onIce = iceDescription.contains(curStartX);
-                    return new Pair<>(curHeight, onIce);
-                }
-            } else if (curStartX <= currentX && currentX <= curEndX) {
-                boolean onIce = iceDescription.contains(curStartX);
-                return new Pair<>(curHeight, onIce);
-            } else if (curEndX < currentX && currentX < rightBorder) {
-                if (nextHeight > curHeight) {
-                    boolean onIce = iceDescription.contains(curStartX);
-                    return new Pair<>(curHeight, onIce);
-                }
-            }
-        }
-        return new Pair<>((int) sizeY, false);
-    }
-
-    public boolean thereisaladder(double X, double Y) {
+    public boolean ThereIsALadder(double X, double Y) {
         boolean ans= false;
         for (Web string : ladder){
-            Rectangle2D Hitbox = new Rectangle2D(string.getPositionX(),string.getPositionY(), string.getWidth(), string.getHeight());
-            if (Hitbox.contains(X,Y)) ans = true;
+            Rectangle2D HitBox = new Rectangle2D(string.getPositionX(),string.getPositionY(), string.getWidth(), string.getHeight());
+            if (HitBox.contains(X,Y)) ans = true;
         }
         return ans;
     }
 
     public void Resize(){
-        this.sizeX=background.getWidth();
-        this.sizeY=background.getHeight();
+        this.sizeX= fireBackground.getWidth();
+        this.sizeY= fireBackground.getHeight();
 
     }
     public void updateLevel(double time) {
@@ -118,33 +97,40 @@ public class Level implements DefineLevel {
             enemy.update(time);
         }
     }
-
+    public void swap() {
+        isFire = !isFire;
+        this.setGroundOnly();
+    }
     public void setGroundOnly() {
-        ArrayList<Web> newladder = new ArrayList<>();
+        ArrayList<Web> NewLadder = new ArrayList<>();
         for (image_define.MovingAnimatedImage enemy : enemies) {
             if (enemy instanceof Spider) {
                 ((Spider)enemy).setGroundOnly();
                 if (!((Spider) enemy).isGroundOnly()) {
-                    newladder.add(((Spider) enemy).putweb());
-                    //System.out.println("new ladder at " + enemy.getPositionX() +" "+ enemy.getPositionY());
+                    NewLadder.add(((Spider) enemy).putweb());
                 }
             }
-            this.ladder=newladder;
+            this.ladder=NewLadder;
         }
+    }
+    public Image getBackground(){
+        if (isFire) return fireBackground;
+        return iceBackground;
     }
 
     public void drawLevel(GraphicsContext gc, double offsetLandX, double offsetLandY, double time) {
-        gc.drawImage(background, offsetLandX, offsetLandY, sizeX, sizeY,0,0,sizeX,sizeY);
+        gc.drawImage(this.getBackground(), offsetLandX, offsetLandY, sizeX, sizeY,0,0,sizeX,sizeY);
+        gc.fillText(tips, 400, 300);
         for (image_define.MovingAnimatedImage enemy : enemies) {
             double offsetEnemy = enemy.getPositionX() - offsetLandX;
             if (offsetEnemy > 0 && offsetEnemy < sizeX) {
-                gc.drawImage(enemy.getFrame(time), offsetEnemy, enemy.getPositionY(), enemy.getWidth(), enemy.getHeight());
+                gc.drawImage(enemy.getFrame(time), offsetEnemy, enemy.getPositionY()-enemy.getHeight(), enemy.getWidth(), enemy.getHeight());
             }
         }
         for (image_define.MovingAnimatedImage web : ladder){
-            double offsetweb = web.getPositionX() - offsetLandX;
-            if (offsetweb > 0 && offsetweb < sizeX) {
-                gc.drawImage(web.getFrame(time), offsetweb, web.getPositionY(), web.getWidth(), web.getHeight());
+            double OffSetWeb = web.getPositionX() - offsetLandX;
+            if (OffSetWeb > 0 && OffSetWeb < sizeX) {
+                gc.drawImage(web.getFrame(time), OffSetWeb, web.getPositionY(), web.getWidth(), web.getHeight());
             }
         }
     }
