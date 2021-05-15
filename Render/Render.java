@@ -14,7 +14,6 @@ public class Render extends Application {
     final long width = 800; //width of the window
     final long height = 600; //height of the window
     SoundBackground music= new SoundBackground();
-    Integer iceFire = 0;
     Integer currentLevelNum = 0;
 
     public void start(Stage theStage) {
@@ -77,7 +76,6 @@ public class Render extends Application {
 
                 if (player.nextLevel) {
                     currentLevelNum = (currentLevelNum + 1) % 3;
-                    iceFire=0;
                     player.location.clear();
                     player.nextLevel = false;
                     currentLevel.modifyLevel(currentLevel, currentLevelNum);

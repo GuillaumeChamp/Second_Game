@@ -1,6 +1,7 @@
 package image_define.ExtendImage;
 
 import image_define.Levels.Block;
+import image_define.Levels.Water;
 import javafx.scene.image.Image;
 import image_define.Level;
 import image_define.MovingAnimatedImage;
@@ -15,92 +16,140 @@ public class PlayerSkin extends MovingAnimatedImage {
         this.playerLeft = new Image[2];
         this.playerRight = new Image[2];
         this.playerStopped = new Image[1];
-        for (int i=0;i<2;i++) playerLeft[i]=new Image("resources/player/left"+(i+1)+".png");
-        for (int i=0;i<2;i++) playerRight[i]=new Image("resources/player/right" +(i+1)+".png");
-        for (int i=0;i<1;i++) playerStopped[i]=new Image("resources/player/mid.png");
+        for (int i = 0; i < 2; i++) playerLeft[i] = new Image("resources/player/left" + (i + 1) + ".png");
+        for (int i = 0; i < 2; i++) playerRight[i] = new Image("resources/player/right" + (i + 1) + ".png");
+        for (int i = 0; i < 1; i++) playerStopped[i] = new Image("resources/player/mid.png");
         this.setFrames(playerStopped);
         this.setFriction(0.8);
     }
-    public void climb(Level location){
-        double oldX = positionX;
-        double oldY = positionY;
-        if (positionY>0) positionY += forceY/5;
-        positionX= positionX+forceX;
-        if (unable_to_move(location,positionX,positionY)){
-            positionY=oldY;
-            positionX=oldX;
+
+
+
+    /**
+     * Set the right frame on "frame" according to the speed of the player (can be move to MovingAnimatedImage if needed)
+     *
+     * @param location active level
+     */
+    public void setFrame(Level location) {
+        if (Math.abs(velocityX) < 0.2 && this.IsOnTheGround(location)) {
+            this.setFrames(playerStopped);
+            velocityX = 0;
+        } else if (velocityX < 0) {
+            this.setFrames(playerLeft);
+        } else {
+            this.setFrames(playerRight);
         }
     }
-    public boolean CanJump(Level location){
-        Block b = currentBlock(location,positionX,positionY);
+
+    /**
+     * Check if the player is on the top of a block and so able to jump
+     *
+     * @param location active level
+     * @return if the player can jump
+     */
+    public boolean CanJump(Level location) {
+        Block b = currentBlock(location, positionX, positionY);
         double groundLevel = b.getBlock().getMinY();
-        return (positionY >  groundLevel- 30);
+        return (positionY > groundLevel - 30);
     }
+
+
     /**
      * Make the player move with the basic physic
+     *
      * @param location current Level (where the player is)
      */
     public void update(Level location) {
         if (location.ThereIsALadder(positionX, positionY)) {
             this.climb(location);
-        }
-        else {
-            Image[] left = playerLeft;
-            Image[] right = playerRight;
-            Image[] stopped = playerStopped;
+        } else {
             double oldX = positionX;
             double oldY = positionY;
-            accelerationX = (forceX - velocityX / friction) / mass;
-            accelerationY = (forceY + gravity) / mass;
-            if(this.IsOnTheGround(location)) {
-                accelerationY = forceY/mass;
-                velocityY=0;
-            }
-            velocityX = velocityX + accelerationX;
-            velocityY = velocityY + accelerationY;
-            if (Math.abs(velocityX) < 0.1) velocityX = 0;
-            accelerationX = 0;
-            if (Math.abs(velocityX) > 10) velocityX = 10*(velocityX/Math.abs(velocityX));
-            if (Math.abs(velocityY) > 8) velocityY = 8*(velocityY/Math.abs(velocityY));
+            CalculateNewPosition(location);
+            setGoodPosition(oldX,oldY,location);
+            setFrame(location);
+            slide(location);
+        }
+    }
 
-            positionY += velocityY;
-            positionX += velocityX;
-            if (positionY < 0) {
-                positionY = 0;
-                velocityY = -velocityY / 5;
-            }
-            if (positionX < 0) {
-                positionX = 0;
-                velocityX = -velocityX / 5;
-            }
-            if (positionX > location.getSizeX() - this.getWidth()) {
-                positionX = location.getSizeX() - this.getWidth();
-                velocityX = -velocityX / 5;
-            }
-            if (this.unable_to_move(location,positionX,positionY)){
-                if(this.unable_to_move(location,oldX,positionY)) {
-                   positionY = oldY;
-                   velocityY=0;
-                }
-                if(this.unable_to_move(location,positionX,oldY)) positionX=oldX;
-            }
-            if (Math.abs(velocityX) < 0.2 && this.IsOnTheGround(location)) {
-                this.setFrames(stopped);
-                velocityX=0;
-            } else if (velocityX < 0) {
-                this.setFrames(left);
-            } else {
-                this.setFrames(right);
-            }
-            //Todo replace
-            /*
-            if (!location.isFire && this.currentBlock(location,positionX,positionY).get== ) {
-                this.setFriction(10);
-            } else {
-                this.setFriction(1);
-            }
+    /**
+     * Sub function of update. Check if the player is on ice and change the friction if he is on.
+     *
+     * @param location active level
+     */
+    public void slide(Level location) {
+        if (this.IsOnTheGround(location) && (this.currentBlock(location, positionX, positionY) instanceof Water)) {
+            this.setFriction(10);
+        } else {
+            this.setFriction(1);
+        }
+    }
+    /**
+     * Sub-function of update.Make the player going up
+     *
+     * @param location active level
+     */
+    public void climb(Level location) {
+        double oldX = positionX;
+        double oldY = positionY;
+        if (positionY > 0) positionY += forceY / 5;
+        positionX = positionX + forceX;
+        if (unable_to_move(location, positionX, positionY)) {
+            positionY = oldY;
+            positionX = oldX;
+        }
+    }
 
-             */
+    /**
+     * Sub-function of update. Calculate the theoretic new position of the player
+     * @param location active level
+     */
+    public void CalculateNewPosition(Level location){
+        accelerationX = (forceX - velocityX / friction) / mass;
+        accelerationY = (forceY + gravity) / mass;
+        if (this.IsOnTheGround(location)) {
+            accelerationY = forceY / mass;
+            velocityY = 0;
+        }
+        velocityX = velocityX + accelerationX;
+        velocityY = velocityY + accelerationY;
+        if (Math.abs(velocityX) < 0.1) velocityX = 0;
+        accelerationX = 0;
+        if (Math.abs(velocityX) > 10) velocityX = 10 * (velocityX / Math.abs(velocityX));
+        if (Math.abs(velocityY) > 8) velocityY = 8 * (velocityY / Math.abs(velocityY));
+
+    }
+
+    /**
+     * Set the right position of the player according to the border of the level
+     * @param oldX saved position before calculating
+     * @param oldY saved position before calculating
+     * @param location active level
+     */
+    public void setGoodPosition(double oldX,double oldY,Level location){
+        positionY += velocityY;
+        positionX += velocityX;
+        if (positionY < 0) {
+            positionY = 0;
+            velocityY = -velocityY / 5;
+        }
+        if (positionX < 0) {
+            positionX = 0;
+            velocityX = -velocityX / 5;
+        }
+        if (positionX > location.getSizeX() - this.getWidth()) {
+            positionX = location.getSizeX() - this.getWidth();
+            velocityX = -velocityX / 5;
+        }
+        if (this.unable_to_move(location, positionX, positionY)) {
+            if (this.unable_to_move(location, oldX, positionY)) {
+                positionY = oldY;
+                velocityY = 0;
+            }
+            if (this.unable_to_move(location, positionX, oldY)) {
+                positionX = oldX;
+                velocityX = 0;
+            }
         }
     }
 }

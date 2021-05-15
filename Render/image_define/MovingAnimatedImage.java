@@ -111,13 +111,15 @@ public class MovingAnimatedImage implements java.io.Serializable{
 	 */
 	public Block currentBlock(Level location,double x,double y){
 		ArrayList<Block> ground= new ArrayList<>();
+		Block ans = new Block(0,location.getSizeY()-1,location.getSizeX(),1,"");
 		if(!location.isFire)	ground.addAll(location.getIce());
 		ground.addAll(location.getBlocks());
 		for(Block b : ground){
-			if (b.getBlock().intersects(x,y,1,location.getSizeY()-y)) return b;
+			if (b.getBlock().intersects(x,y,1,location.getSizeY()-y)){
+				if (b.getBlock().getMinY()-y < ans.getBlock().getMinY()-y) ans = b;
+			}
 		}
-		System.out.println("standing oob");
-		return null;
+		return ans;
 	}
 
 	/**
