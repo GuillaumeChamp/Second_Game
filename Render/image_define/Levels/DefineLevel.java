@@ -26,6 +26,9 @@ public interface DefineLevel {
             case 2:
                 Level2(currentLevel);
                 break;
+            case 3:
+                Level3(currentLevel);
+                break;
             default:
                 LevelEntry(currentLevel);
                 break;
@@ -40,8 +43,8 @@ public interface DefineLevel {
         String imageUrl = "resources/Level/Level_0_V1.png";
         //Define the ground of the level
         ArrayList<Block> blocks = new ArrayList<>(Arrays.asList(
-                new Block(0,10,205,600-10,"fire"),
                 new Block(205,436,277-205,600-436,"fire"),
+                new Block(0,10,205,600-10,"fire"),
                 new Block(277,468,426-277,600-468,"fire"),
                 new Block(426,501,500-426,600-501,"fire"),
                 new Block(501,535,800-501,600-535,"fire")
@@ -91,9 +94,12 @@ public interface DefineLevel {
                 new Block(0,404,228,600-404,""),
                 new Block(228,515,1270-228,600-515,""),
                 new Block(1268,348,1600-1268,600-348,""),
-                new Block(352,361,682-352,452-361,"")
+                new Block(352,361,682-352,452-361,""),
+                new Block(900,132,1160-900,269-132,""),
+                new Block(1160,0,1329-1160,149,"")
         ));
         currentLevel.setBackground(new javafx.scene.image.Image(imageUrlFire),new javafx.scene.image.Image(imageUrlIce));
+        currentLevel.Resize();
         currentLevel.setBlocks(blocks);
 
         currentLevel.enemies = new ArrayList<>();
@@ -105,5 +111,31 @@ public interface DefineLevel {
         spider2.setXLimit(1100, 1220);
         currentLevel.enemies.add(spider2);
 
+    }
+    static void Level3(Level currentLevel) {
+        String imageUrlFire = "resources/Level/Level_3_fire_V1.png";
+        String imageUrlIce = "resources/Level/Level_3_ice_V1.png";
+        ArrayList<Block> blocks = new ArrayList<>(Arrays.asList(
+                new Block(0,948,331,1200-404,""),
+                new Block(330,1115,800-330,1200-1115,""),
+                new Block(13,676,631-13,844-348,""),
+                new Block(461,392,800-461,583-392,""),
+                new Block(47,0,630-47,186,""),
+                new Block(169,392,461-169,558-169,"")
+        ));
+        currentLevel.setBackground(new javafx.scene.image.Image(imageUrlFire),new javafx.scene.image.Image(imageUrlIce));
+        currentLevel.setBlocks(blocks);
+
+        currentLevel.enemies = new ArrayList<>();
+        currentLevel.setTips("you should try to think by yourself now");
+        Spider spider1 = new Spider(380, 1114, 40, 40, currentLevel);
+        spider1.setXLimit(380, 600);
+        spider1.setYLimit(1114,574);
+        currentLevel.enemies.add(spider1);
+        Spider spider2 = new Spider(47, 672, 20, 20, currentLevel);
+        spider2.setXLimit(47, 630-47);
+        spider2.setYLimit(672,180);
+        currentLevel.enemies.add(spider2);
+        currentLevel.Resize();
     }
 }

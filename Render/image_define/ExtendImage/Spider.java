@@ -46,6 +46,11 @@ public class Spider extends MovingAnimatedImage {
         this.xEnd = xEnd;
     }
 
+    public void setYLimit(int yLow, int yHigh) {
+        this.yLow = yLow;
+        this.yHigh = yHigh;
+    }
+
     public boolean isGroundOnly() {
         return groundOnly;
     }

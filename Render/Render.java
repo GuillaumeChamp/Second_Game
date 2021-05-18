@@ -14,7 +14,7 @@ public class Render extends Application {
     final long width = 800; //width of the window
     final long height = 600; //height of the window
     SoundBackground music= new SoundBackground();
-    Integer currentLevelNum = 0;
+    Integer currentLevelNum = 2;
 
     public void start(Stage theStage) {
         //TODO : make the start menu
@@ -39,7 +39,7 @@ public class Render extends Application {
                     KeyCode code = e.getCode();
                     if (!input.contains(code))
                         input.add(code);
-                    if (code==KeyCode.C){
+                    if (code==KeyCode.E){
                         currentLevel.swap();
                     }
                     if(code==KeyCode.R) System.out.println(player.skin.getPositionX() + " " + player.skin.getPositionY());
@@ -61,13 +61,13 @@ public class Render extends Application {
 
                 player.skin.setForceX(0);
                 player.skin.setForceY(0);
-                if (input.contains(KeyCode.LEFT)) {
+                if (input.contains(KeyCode.Q)) {
                     player.skin.addForces(-10,0);
                 }
-                if (input.contains(KeyCode.RIGHT)) {
+                if (input.contains(KeyCode.D)) {
                     player.skin.addForces(10, 0);
                 }
-                if (input.contains(KeyCode.UP)) {
+                if (input.contains(KeyCode.Z)) {
                     if (player.CanJump()||player.location.ThereIsALadder(player.skin.getPositionX(),player.skin.getPositionY())) player.skin.addForces(0, -20);
                 }
                 currentLevel.updateLevel(t);
@@ -75,11 +75,11 @@ public class Render extends Application {
 
 
                 if (player.nextLevel) {
-                    currentLevelNum = (currentLevelNum + 1) % 3;
+                    currentLevelNum = (currentLevelNum + 1) % 4;
                     player.location.clear();
                     player.nextLevel = false;
                     currentLevel.modifyLevel(currentLevel, currentLevelNum);
-                    player.skin.setPosition(0, player.skin.currentBlock(player.location, 0,player.skin.getPositionY()).getBlock().getMinY());
+                    player.skin.setPosition(0, player.skin.currentBlock(player.location, 0,player.skin.getPositionY()).getBlock().getMinY()-1);
                 }
 
                 double OffSetLandX = player.skin.getPositionX() - (width >> 1);
