@@ -1,8 +1,11 @@
 import java.util.ArrayList;
 import characters.Player;
 import javafx.application.Application;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
+import javafx.scene.layout.VBox;
 import javafx.stage.*;
 import javafx.scene.*;
 import javafx.scene.canvas.*;
@@ -15,18 +18,34 @@ public class Render extends Application {
     final long height = 600; //height of the window
     SoundBackground music= new SoundBackground();
     Integer currentLevelNum = 2;
+    private Scene menuScene;
+    private Scene theScene;
+    long startNanoTime;
+    AnimationTimer mainGameLoopTimer;
 
-    public void start(Stage theStage) {
+    private void defineMainMenu(Stage theStage) {
         //TODO : make the start menu
-        theStage.setTitle("Stony Journey");
-        music.start(theStage);
+        Label label1 = new Label("Main Menu");
+        Button startButton = new Button("Start");
+        startButton.setOnAction(e -> {
+            theStage.setScene(theScene);
+            startNanoTime = System.nanoTime();
+            mainGameLoopTimer.start();
+        });
+        Button exitButton = new Button("Exit");
+        exitButton.setOnAction(e -> {
+            theStage.close();
+        });
+        VBox layout1 = new VBox(20);
+        layout1.getChildren().addAll(label1, startButton, exitButton);
+        menuScene = new Scene(layout1, 200, 200);
+    }
+
+    private void defineGameLoop(Stage theStage) {
         ArrayList<KeyCode> input = new ArrayList<>(); //store the keyboard input
 
         Group root = new Group();
-        Scene theScene = new Scene(root);
-        theStage.setScene(theScene);
-        final long startNanoTime = System.nanoTime();
-
+        theScene = new Scene(root);
         Canvas canvas = new Canvas(width, height);
         root.getChildren().add(canvas);
 
@@ -55,7 +74,8 @@ public class Render extends Application {
         Image background1 = new Image( "resources/Level/Background/CloudsFront.png" );
         Image background2 = new Image( "resources/Level/Background/BGBack.png" );
         Image background3 = new Image( "resources/Level/Background/BGFront.png" );
-        new AnimationTimer() {
+
+        mainGameLoopTimer = new AnimationTimer() {
             public void handle(long currentNanoTime) {
                 double t = (currentNanoTime - startNanoTime) / 1000000000.0;
 
@@ -97,7 +117,17 @@ public class Render extends Application {
                 Image playerIm = player.skin.getFrame(t);
                 gc.drawImage(playerIm, (int) player.skin.getPositionX() - OffSetLandX, (int) player.skin.getPositionY()-player.skin.getHeight()-OffSetLandY, playerIm.getWidth() * (player.skin.getHeight() / playerIm.getHeight()), player.skin.getHeight());
             }
-        }.start();
+        };
+    }
+
+    public void start(Stage theStage) {
+        theStage.setTitle("Stony Journey");
+        music.start(theStage);
+
+        defineMainMenu(theStage);
+        defineGameLoop(theStage);
+        
+        theStage.setScene(menuScene);
         theStage.show();
     }
 }
