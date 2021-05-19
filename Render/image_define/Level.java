@@ -17,6 +17,7 @@ public class Level implements DefineLevel {
     private javafx.scene.image.Image iceBackground;
     private javafx.scene.image.Image fireBackground;
     private ArrayList<Block> blocks = new ArrayList<>();
+    private ArrayList<Block> breakableList = new ArrayList<>();
     private ArrayList<Water> ice = new ArrayList<>();
     private ArrayList<Web> ladder= new ArrayList<>();
     private double sizeX;
@@ -50,6 +51,26 @@ public class Level implements DefineLevel {
 
     public void setBlocks(ArrayList<Block> blocks) {
         this.blocks = blocks;
+    }
+
+    /**
+     * function use to define the level
+     * @param breakable add this to breakable block list
+     */
+    public void addBreakable(Block breakable){
+        this.breakableList.add(breakable);
+        this.blocks.add(breakable);
+    }
+
+    /**
+     * function use to update the world
+     * @param breakable remove this block from boundary
+     */
+    public void breakBlock(Block breakable){
+        if (breakableList.contains(breakable)) {
+            this.blocks.remove(breakable);
+            this.breakableList.remove(breakable);
+        }
     }
 
     public ArrayList<Block> getBlocks() {

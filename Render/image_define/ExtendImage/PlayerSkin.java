@@ -66,6 +66,7 @@ public class PlayerSkin extends MovingAnimatedImage {
             double oldX = positionX;
             double oldY = positionY;
             CalculateNewPosition(location);
+            breakBlock(location);
             setGoodPosition(oldX,oldY,location);
             setFrame(location);
             slide(location);
@@ -117,6 +118,8 @@ public class PlayerSkin extends MovingAnimatedImage {
         accelerationX = 0;
         if (Math.abs(velocityX) > 10) velocityX = 10 * (velocityX / Math.abs(velocityX));
         if (Math.abs(velocityY) > 8) velocityY = 8 * (velocityY / Math.abs(velocityY));
+        positionY += velocityY;
+        positionX += velocityX;
 
     }
 
@@ -127,8 +130,6 @@ public class PlayerSkin extends MovingAnimatedImage {
      * @param location active level
      */
     public void setGoodPosition(double oldX,double oldY,Level location){
-        positionY += velocityY;
-        positionX += velocityX;
         if (positionY < 0) {
             positionY = 0;
             velocityY = -velocityY / 5;
@@ -151,5 +152,10 @@ public class PlayerSkin extends MovingAnimatedImage {
                 velocityX = 0;
             }
         }
+    }
+    public void breakBlock(Level location){
+        Block frontBlock = currentBlock(location,positionX,positionY-10);
+        if (Math.abs(velocityX)>5) location.breakBlock(frontBlock);
+
     }
 }
