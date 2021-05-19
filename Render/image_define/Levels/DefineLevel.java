@@ -116,15 +116,16 @@ public interface DefineLevel {
         String imageUrlFire = "resources/Level/Level_3_fire_V1.png";
         String imageUrlIce = "resources/Level/Level_3_ice_V1.png";
         ArrayList<Block> blocks = new ArrayList<>(Arrays.asList(
-                new Block(0,948,331,1200-404,""),
+                new Block(0,948,331,1200-948,""),
                 new Block(330,1115,800-330,1200-1115,""),
-                new Block(13,676,631-13,844-348,""),
+                new Block(13,676,631-13,844-676,""),
                 new Block(461,392,800-461,583-392,""),
                 new Block(47,0,630-47,186,""),
-                new Block(169,392,461-169,558-169,"")
+                new Block(169,392,461-169,558-392,"")
         ));
         currentLevel.setBackground(new javafx.scene.image.Image(imageUrlFire),new javafx.scene.image.Image(imageUrlIce));
         currentLevel.setBlocks(blocks);
+        currentLevel.setRatio(2);
 
         currentLevel.enemies = new ArrayList<>();
         currentLevel.setTips("you should try to think by yourself now");

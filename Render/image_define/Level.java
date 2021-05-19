@@ -22,6 +22,7 @@ public class Level implements DefineLevel {
     private ArrayList<Web> ladder= new ArrayList<>();
     private double sizeX;
     private double sizeY;
+    private double ratio;
     public ArrayList<image_define.MovingAnimatedImage> enemies = new ArrayList<>();
     private String tips = "";
 
@@ -33,6 +34,11 @@ public class Level implements DefineLevel {
     public Level(long width, long height){
         this.sizeY = height;
         this.sizeX = width;
+        this.ratio = 1;
+    }
+
+    public void setRatio(double ratio) {
+        this.ratio = ratio;
     }
 
     /**
@@ -145,13 +151,13 @@ public class Level implements DefineLevel {
         for (image_define.MovingAnimatedImage enemy : enemies) {
             double offsetEnemy = enemy.getPositionX() - offsetLandX;
             if (offsetEnemy > 0 && offsetEnemy < sizeX) {
-                gc.drawImage(enemy.getFrame(time), offsetEnemy, enemy.getPositionY()-enemy.getHeight(), enemy.getWidth(), enemy.getHeight());
+                gc.drawImage(enemy.getFrame(time), offsetEnemy, (enemy.getPositionY()-enemy.getHeight())/this.ratio, enemy.getWidth(), enemy.getHeight());
             }
         }
         for (image_define.MovingAnimatedImage web : ladder){
             double OffSetWeb = web.getPositionX() - offsetLandX;
             if (OffSetWeb > 0 && OffSetWeb < sizeX) {
-                gc.drawImage(web.getFrame(time), OffSetWeb, web.getPositionY(), web.getWidth(), web.getHeight());
+                gc.drawImage(web.getFrame(time), OffSetWeb, web.getPositionY()/this.ratio, web.getWidth(), web.getHeight());
             }
         }
     }
