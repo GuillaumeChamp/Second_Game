@@ -2,6 +2,7 @@ package image_define;
 
 import image_define.Levels.Block;
 import image_define.Levels.DefineLevel;
+import image_define.Levels.Exit;
 import image_define.Levels.Water;
 import javafx.scene.canvas.GraphicsContext;
 import image_define.ExtendImage.Spider;
@@ -18,6 +19,7 @@ public class Level implements DefineLevel {
     private javafx.scene.image.Image fireBackground;
     private ArrayList<Block> blocks = new ArrayList<>();
     private Rectangle2D exitBlock;
+    private ArrayList<Exit> exitList = new ArrayList<>();
     private ArrayList<Block> breakableList = new ArrayList<>();
     private ArrayList<Water> ice = new ArrayList<>();
     private ArrayList<Web> ladder= new ArrayList<>();
@@ -62,12 +64,12 @@ public class Level implements DefineLevel {
         this.blocks = blocks;
     }
 
-    public void setExitBlock(Rectangle2D exitBlock) {
-        this.exitBlock = exitBlock;
+    public void addExitBlock(Exit exitBlock) {
+        this.exitList.add(exitBlock);
     }
 
-    public Rectangle2D getExitBlock() {
-        return exitBlock;
+    public ArrayList<Exit> getExitList() {
+        return exitList;
     }
 
     /**
@@ -114,6 +116,7 @@ public class Level implements DefineLevel {
         ladder= new ArrayList<>();
         enemies= new ArrayList<>();
         isFire=true;
+        exitList.clear();
     }
 
     public boolean ThereIsALadder(double X, double Y) {

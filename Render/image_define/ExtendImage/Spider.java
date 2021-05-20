@@ -60,9 +60,11 @@ public class Spider extends MovingAnimatedImage {
     public void setGroundOnly() {
         this.groundOnly = !this.groundOnly;
     }
+
     public Web putweb(){
         return new Web(this.getPositionX(),this.yHigh,this.getWidth(),(int) this.getPositionY());
     }
+
     public void Hit(MovingAnimatedImage target){
         Rectangle2D spiderHitBox = new Rectangle2D(positionX,positionY,this.getWidth(),this.getHeight());
         Rectangle2D targetHitBox = new Rectangle2D(target.getPositionX(),target.getPositionY(),target.getWidth(),target.getHeight());

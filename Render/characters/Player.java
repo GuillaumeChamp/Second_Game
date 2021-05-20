@@ -3,6 +3,8 @@ package characters;
 import image_define.ExtendImage.PlayerSkin;
 import image_define.ExtendImage.Spider;
 import image_define.Level;
+import image_define.Levels.Block;
+import image_define.Levels.Exit;
 import image_define.MovingAnimatedImage;
 import javafx.geometry.Rectangle2D;
 
@@ -26,7 +28,9 @@ public class Player {
             if (e instanceof Spider) ((Spider) e).Hit(skin);
         }
         this.skin.update(this.location);
-        boolean end = this.location.getExitBlock().intersects(this.skin.getPositionX(),this.skin.getPositionY(),1,location.getSizeY()-this.skin.getPositionY());
+        boolean end = false;
+        for (Exit exit : location.getExitList())
+        if (exit.getBlock().intersects(this.skin.getPositionX(),this.skin.getPositionY(),1,location.getSizeY()-this.skin.getPositionY())) end =true;
         if (end)  this.nextLevel = true;
     }
 }

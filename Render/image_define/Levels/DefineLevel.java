@@ -56,7 +56,7 @@ public interface DefineLevel {
                 new Block(501,535,800-501,600-535,"fire")
         ));
         currentLevel.setBlocks(blocks);
-        currentLevel.setExitBlock(new Rectangle2D(750,348,50,535-348));
+        currentLevel.addExitBlock(new Exit(750,348,50,535-348,"",1));
         currentLevel.setBackground(new javafx.scene.image.Image(imageUrl),new javafx.scene.image.Image(imageUrl));
         currentLevel.Resize();
         currentLevel.setTips("I can only go right");
@@ -89,7 +89,7 @@ public interface DefineLevel {
         currentLevel.setTips("maybe I can try to freeze this water with my E tem");
         currentLevel.setBackground(new javafx.scene.image.Image(imageUrlFire),new javafx.scene.image.Image(imageUrlIce));
         currentLevel.setIce(ice);
-        currentLevel.setExitBlock(new Rectangle2D(1550,340,50,496-348));
+        currentLevel.addExitBlock(new Exit(1550,340,50,496-348,"",2));
         currentLevel.Resize();
         currentLevel.enemies = new ArrayList<>();
 
@@ -109,7 +109,7 @@ public interface DefineLevel {
         currentLevel.setBackground(new javafx.scene.image.Image(imageUrlFire),new javafx.scene.image.Image(imageUrlIce));
         currentLevel.Resize();
         currentLevel.setBlocks(blocks);
-        currentLevel.setExitBlock(new Rectangle2D(1550,348,50,600-348));
+        currentLevel.addExitBlock(new Exit(1550,348,50,600-348,"",3));
         currentLevel.startX = 150;
 
         currentLevel.enemies = new ArrayList<>();
@@ -135,7 +135,7 @@ public interface DefineLevel {
         ));
         currentLevel.setBackground(new javafx.scene.image.Image(imageUrlFire),new javafx.scene.image.Image(imageUrlIce));
         currentLevel.setBlocks(blocks);
-        currentLevel.setExitBlock(new Rectangle2D(750,0,50,392));
+        currentLevel.addExitBlock(new Exit(750,0,50,392,"",4));
         currentLevel.setRatio(2);
         //adding start x position
         currentLevel.startX = 100;
@@ -174,7 +174,7 @@ public interface DefineLevel {
         currentLevel.setBackground(new javafx.scene.image.Image(imageUrlFire),new javafx.scene.image.Image(imageUrlIce));
         currentLevel.setIce(ice);
         currentLevel.setTips("I ... don't know where am I");
-        currentLevel.setExitBlock(new Rectangle2D(1550,348,50,496-348));
+        currentLevel.addExitBlock(new Exit(1550,348,50,496-348,"",5));
         currentLevel.Resize();
         currentLevel.enemies = new ArrayList<>();
 
@@ -195,7 +195,7 @@ public interface DefineLevel {
         currentLevel.setBackground(new javafx.scene.image.Image(imageUrlFire), new javafx.scene.image.Image(imageUrlIce));
         currentLevel.Resize();
         currentLevel.setBlocks(blocks);
-        currentLevel.setExitBlock(new Rectangle2D(1550, 0, 50, 396));
+        currentLevel.addExitBlock(new Exit(1550, 0, 50, 396,"",6));
         currentLevel.startX = 150;
 
         currentLevel.enemies = new ArrayList<>();
