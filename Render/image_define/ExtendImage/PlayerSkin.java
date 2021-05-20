@@ -13,11 +13,11 @@ public class PlayerSkin extends MovingAnimatedImage {
 
     public PlayerSkin(int x, int y, int w, int h) {
         super(x, y, w, h);
-        this.playerLeft = new Image[2];
-        this.playerRight = new Image[2];
+        this.playerLeft = new Image[4];
+        this.playerRight = new Image[4];
         this.playerStopped = new Image[1];
-        for (int i = 0; i < 2; i++) playerLeft[i] = new Image("resources/player/left" + (i + 1) + ".png");
-        for (int i = 0; i < 2; i++) playerRight[i] = new Image("resources/player/right" + (i + 1) + ".png");
+        for (int i = 0; i < 4; i++) playerLeft[i] = new Image("resources/player/left" + (i + 1) + ".png");
+        for (int i = 0; i < 4; i++) playerRight[i] = new Image("resources/player/right" + (i + 1) + ".png");
         for (int i = 0; i < 1; i++) playerStopped[i] = new Image("resources/player/mid.png");
         this.setFrames(playerStopped);
         this.setFriction(0.8);

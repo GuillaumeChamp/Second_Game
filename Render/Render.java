@@ -20,29 +20,47 @@ public class Render extends Application {
     Integer currentLevelNum = 0; //todo : delete that after test
     private Scene menuScene;
     private Scene theScene;
+
     long startNanoTime;
+
     AnimationTimer mainGameLoopTimer;
 
+    Image background0 = new Image( "resources/Level/Background/CloudsBack.png" );
+    Image background1 = new Image( "resources/Level/Background/CloudsFront.png" );
+    Image background2 = new Image( "resources/Level/Background/BGBack.png" );
+    Image background3 = new Image( "resources/Level/Background/BGFront.png" );
+
     private void defineMainMenu(Stage theStage) {
-        //TODO : finish the start menu
-        Label label1 = new Label("Main Menu");
-        label1.setTranslateX(200);
-        label1.setTranslateY(200);
+        //TODO : make the start menu
         Button startButton = new Button("Start");
-        startButton.setTranslateX(200);
-        startButton.setTranslateY(200);
         startButton.setOnAction(e -> {
             theStage.setScene(theScene);
             startNanoTime = System.nanoTime();
             mainGameLoopTimer.start();
         });
+        startButton.setLayoutX(width/2 - 10);
+        startButton.setLayoutY(height/2 - 100);
         Button exitButton = new Button("Exit");
-        exitButton.setTranslateX(200);
-        exitButton.setTranslateY(200);
         exitButton.setOnAction(e -> theStage.close());
-        VBox layout1 = new VBox(20);
-        layout1.getChildren().addAll(label1, startButton, exitButton);
-        menuScene = new Scene(layout1, 800, 600);
+        exitButton.setLayoutX(width/2 - 10);
+        exitButton.setLayoutY(height/2 - 50);
+        Label controlInfo = new Label("H: restart the current level\nE: switch between ice/fire\nD: go right\nQ: go left\nZ: go upward");
+        controlInfo.setLayoutX(width*2/5);
+        controlInfo.setLayoutY(height/2);
+
+        Group root = new Group();
+        menuScene = new Scene(root);
+        Canvas canvas = new Canvas(width, height);
+        root.getChildren().add(canvas);
+        root.getChildren().add(startButton);
+        root.getChildren().add(exitButton);
+        root.getChildren().add(controlInfo);
+
+        GraphicsContext gc = canvas.getGraphicsContext2D();
+        gc.drawImage(background0,0,0);
+        gc.drawImage(background1,0,0);
+        gc.drawImage(background2,0,0);
+        gc.drawImage(background3,0,0);
     }
 
     private void defineGameLoop(Stage theStage) {
@@ -73,10 +91,6 @@ public class Render extends Application {
             KeyCode code = e.getCode();
             input.remove(code);
         });
-        Image background0 = new Image( "resources/Level/Background/CloudsBack.png" );
-        Image background1 = new Image( "resources/Level/Background/CloudsFront.png" );
-        Image background2 = new Image( "resources/Level/Background/BGBack.png" );
-        Image background3 = new Image( "resources/Level/Background/BGFront.png" );
 
         mainGameLoopTimer = new AnimationTimer() {
             public void handle(long currentNanoTime) {
