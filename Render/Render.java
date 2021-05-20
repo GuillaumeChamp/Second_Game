@@ -17,26 +17,32 @@ public class Render extends Application {
     final long width = 800; //width of the window
     final long height = 600; //height of the window
     SoundBackground music= new SoundBackground();
-    Integer currentLevelNum = 0;
+    Integer currentLevelNum = 0; //todo : delete that after test
     private Scene menuScene;
     private Scene theScene;
     long startNanoTime;
     AnimationTimer mainGameLoopTimer;
 
     private void defineMainMenu(Stage theStage) {
-        //TODO : make the start menu
+        //TODO : finish the start menu
         Label label1 = new Label("Main Menu");
+        label1.setTranslateX(200);
+        label1.setTranslateY(200);
         Button startButton = new Button("Start");
+        startButton.setTranslateX(200);
+        startButton.setTranslateY(200);
         startButton.setOnAction(e -> {
             theStage.setScene(theScene);
             startNanoTime = System.nanoTime();
             mainGameLoopTimer.start();
         });
         Button exitButton = new Button("Exit");
+        exitButton.setTranslateX(200);
+        exitButton.setTranslateY(200);
         exitButton.setOnAction(e -> theStage.close());
         VBox layout1 = new VBox(20);
         layout1.getChildren().addAll(label1, startButton, exitButton);
-        menuScene = new Scene(layout1, 200, 200);
+        menuScene = new Scene(layout1, 800, 600);
     }
 
     private void defineGameLoop(Stage theStage) {
@@ -50,7 +56,7 @@ public class Render extends Application {
         GraphicsContext gc = canvas.getGraphicsContext2D();
 
         Level currentLevel = new Level(width, height);
-        currentLevel.modifyLevel(currentLevel, currentLevelNum);
+        currentLevel.modifyLevel(currentLevel, currentLevelNum);//todo : delete that after test
         Player player = new Player(210,436,30,60, 40, currentLevel);
         theScene.setOnKeyPressed(e -> {
                     KeyCode code = e.getCode();
@@ -93,15 +99,6 @@ public class Render extends Application {
                 }
                 currentLevel.updateLevel(t);
                 player.updateSkin();
-
-
-                if (player.nextLevel) {
-                    currentLevelNum = (currentLevelNum + 1);
-                    player.location.clear();
-                    player.nextLevel = false;
-                    currentLevel.modifyLevel(currentLevel, currentLevelNum);
-                    player.skin.setPosition(currentLevel.startX, player.skin.currentBlock(player.location, 0,player.skin.getPositionY()).getBlock().getMinY()-1);
-                }
 
                 double OffSetLandX = player.skin.getPositionX() - (width >> 1);
                 double OffSetLandY = player.skin.getPositionY() - (height >> 1);

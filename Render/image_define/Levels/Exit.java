@@ -3,7 +3,7 @@ package image_define.Levels;
 import javafx.scene.image.Image;
 
 public class Exit extends Block{
-    int link;
+    private final int link;
     /**
      * Create a block that can be use to define the level
      *
@@ -17,5 +17,9 @@ public class Exit extends Block{
     public Exit(double x, double y, double width, double height, String type,int destination) {
         super(x, y, width, height, type);
         link = destination;
+    }
+
+    public int getLink() {
+        return link;
     }
 }
