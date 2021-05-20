@@ -17,7 +17,7 @@ public class Render extends Application {
     final long width = 800; //width of the window
     final long height = 600; //height of the window
     SoundBackground music= new SoundBackground();
-    Integer currentLevelNum = 2;
+    Integer currentLevelNum = 0;
     private Scene menuScene;
     private Scene theScene;
     long startNanoTime;
@@ -33,9 +33,7 @@ public class Render extends Application {
             mainGameLoopTimer.start();
         });
         Button exitButton = new Button("Exit");
-        exitButton.setOnAction(e -> {
-            theStage.close();
-        });
+        exitButton.setOnAction(e -> theStage.close());
         VBox layout1 = new VBox(20);
         layout1.getChildren().addAll(label1, startButton, exitButton);
         menuScene = new Scene(layout1, 200, 200);
@@ -99,7 +97,7 @@ public class Render extends Application {
 
 
                 if (player.nextLevel) {
-                    currentLevelNum = (currentLevelNum + 1) % 4;
+                    currentLevelNum = (currentLevelNum + 1);
                     player.location.clear();
                     player.nextLevel = false;
                     currentLevel.modifyLevel(currentLevel, currentLevelNum);

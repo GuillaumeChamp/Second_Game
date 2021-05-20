@@ -1,7 +1,6 @@
 package image_define.Levels;
 
 import javafx.geometry.Rectangle2D;
-import javafx.util.Pair;
 import image_define.ExtendImage.Spider;
 import image_define.Level;
 
@@ -30,6 +29,9 @@ public interface DefineLevel {
             case 3:
                 Level3(currentLevel);
                 break;
+            case 4:
+                Level4(currentLevel);
+                break;
             default:
                 LevelEntry(currentLevel);
                 break;
@@ -51,6 +53,7 @@ public interface DefineLevel {
                 new Block(501,535,800-501,600-535,"fire")
         ));
         currentLevel.setBlocks(blocks);
+        currentLevel.setExitBlock(new Rectangle2D(750,348,50,535-348));
         currentLevel.setBackground(new javafx.scene.image.Image(imageUrl),new javafx.scene.image.Image(imageUrl));
         currentLevel.Resize();
         currentLevel.setTips("go to the right");
@@ -83,6 +86,7 @@ public interface DefineLevel {
         currentLevel.setTips("press c to freeze the water");
         currentLevel.setBackground(new javafx.scene.image.Image(imageUrlFire),new javafx.scene.image.Image(imageUrlIce));
         currentLevel.setIce(ice);
+        currentLevel.setExitBlock(new Rectangle2D(1550,340,50,496-348));
         currentLevel.Resize();
         currentLevel.enemies = new ArrayList<>();
 
@@ -128,7 +132,7 @@ public interface DefineLevel {
         ));
         currentLevel.setBackground(new javafx.scene.image.Image(imageUrlFire),new javafx.scene.image.Image(imageUrlIce));
         currentLevel.setBlocks(blocks);
-        currentLevel.setExitBlock(new Rectangle2D(750,1115,50,1200-1115));
+        currentLevel.setExitBlock(new Rectangle2D(750,0,50,392));
         currentLevel.setRatio(2);
         //adding start x position
         currentLevel.startX = 100;
@@ -144,5 +148,32 @@ public interface DefineLevel {
         spider2.setYLimit(672,180);
         currentLevel.enemies.add(spider2);
         currentLevel.Resize();
+    }
+    static void Level4(Level currentLevel) {
+        String imageUrlFire = "resources/Level/Level_4_fire_V1.png";
+        String imageUrlIce = "resources/Level/Level_4_ice_V1.png";
+        ArrayList<Block> blocks = new ArrayList<>(Arrays.asList(
+                new Block(0,404,228,600-404,""),
+                new Block(229,491,378-113,600-491,""),
+                new Block(379,540,787-379,600-540,""),
+                new Block(787,460,1093-787,600-460,""),
+                new Block(1093,373,1387-1093,600-373,""),
+                new Block(1388,496,1600-1388,600-496,""),
+                new Block(139,0,1423-139,176,"")
+        ));
+        currentLevel.setBlocks(blocks);
+
+        ArrayList<Water> ice = new ArrayList<>(Arrays.asList(
+                new Water(229,422,786-229,490-422),
+                new Water(787,422,1092-787,459-422),
+                new Water(379,491,786-379,539-491)
+        ));
+        currentLevel.setBackground(new javafx.scene.image.Image(imageUrlFire),new javafx.scene.image.Image(imageUrlIce));
+        currentLevel.setIce(ice);
+        currentLevel.setTips("");
+        currentLevel.setExitBlock(new Rectangle2D(1550,348,50,496-348));
+        currentLevel.Resize();
+        currentLevel.enemies = new ArrayList<>();
+
     }
 }
