@@ -4,6 +4,7 @@ import image_define.ExtendImage.PlayerSkin;
 import image_define.ExtendImage.Spider;
 import image_define.Level;
 import image_define.MovingAnimatedImage;
+import javafx.geometry.Rectangle2D;
 
 public class Player {
     public PlayerSkin skin;
@@ -25,7 +26,8 @@ public class Player {
             if (e instanceof Spider) ((Spider) e).Hit(skin);
         }
         this.skin.update(this.location);
-        boolean end = this.skin.getPositionX() >= this.location.getSizeX() - 1.1 * this.skin.getWidth();
+        boolean end = this.location.getExitBlock().intersects(this.skin.getPositionX(),this.skin.getPositionY(),1,location.getSizeY()-this.skin.getPositionY());
+//        boolean end = this.skin.getPositionX() >= this.location.getSizeX() - 1.1 * this.skin.getWidth();
         if (end)  this.nextLevel = true;
     }
 }

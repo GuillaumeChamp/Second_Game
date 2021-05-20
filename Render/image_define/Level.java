@@ -17,6 +17,7 @@ public class Level implements DefineLevel {
     private javafx.scene.image.Image iceBackground;
     private javafx.scene.image.Image fireBackground;
     private ArrayList<Block> blocks = new ArrayList<>();
+    private Rectangle2D exitBlock;
     private ArrayList<Block> breakableList = new ArrayList<>();
     private ArrayList<Water> ice = new ArrayList<>();
     private ArrayList<Web> ladder= new ArrayList<>();
@@ -59,6 +60,14 @@ public class Level implements DefineLevel {
 
     public void setBlocks(ArrayList<Block> blocks) {
         this.blocks = blocks;
+    }
+
+    public void setExitBlock(Rectangle2D exitBlock) {
+        this.exitBlock = exitBlock;
+    }
+
+    public Rectangle2D getExitBlock() {
+        return exitBlock;
     }
 
     /**

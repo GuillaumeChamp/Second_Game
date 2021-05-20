@@ -1,5 +1,6 @@
 package image_define.Levels;
 
+import javafx.geometry.Rectangle2D;
 import javafx.util.Pair;
 import image_define.ExtendImage.Spider;
 import image_define.Level;
@@ -101,6 +102,7 @@ public interface DefineLevel {
         currentLevel.setBackground(new javafx.scene.image.Image(imageUrlFire),new javafx.scene.image.Image(imageUrlIce));
         currentLevel.Resize();
         currentLevel.setBlocks(blocks);
+        currentLevel.setExitBlock(new Rectangle2D(1550,348,50,600-348));
         currentLevel.startX = 150;
 
         currentLevel.enemies = new ArrayList<>();
@@ -126,6 +128,7 @@ public interface DefineLevel {
         ));
         currentLevel.setBackground(new javafx.scene.image.Image(imageUrlFire),new javafx.scene.image.Image(imageUrlIce));
         currentLevel.setBlocks(blocks);
+        currentLevel.setExitBlock(new Rectangle2D(750,1115,50,1200-1115));
         currentLevel.setRatio(2);
         //adding start x position
         currentLevel.startX = 100;
