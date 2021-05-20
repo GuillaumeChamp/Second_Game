@@ -67,7 +67,6 @@ public class Render extends Application {
             KeyCode code = e.getCode();
             input.remove(code);
         });
-        //Todo : make a better load (may passed by a rename)
         Image background0 = new Image( "resources/Level/Background/CloudsBack.png" );
         Image background1 = new Image( "resources/Level/Background/CloudsFront.png" );
         Image background2 = new Image( "resources/Level/Background/BGBack.png" );

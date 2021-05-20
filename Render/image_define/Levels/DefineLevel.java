@@ -32,6 +32,9 @@ public interface DefineLevel {
             case 4:
                 Level4(currentLevel);
                 break;
+            case 5:
+                Level5(currentLevel);
+                break;
             default:
                 LevelEntry(currentLevel);
                 break;
@@ -175,5 +178,33 @@ public interface DefineLevel {
         currentLevel.Resize();
         currentLevel.enemies = new ArrayList<>();
 
+    }
+    static void Level5(Level currentLevel) {
+        String imageUrlFire = "resources/Level/Level_5_fire_V1.png";
+        String imageUrlIce = "resources/Level/Level_5_ice_V1.png";
+        ArrayList<Block> blocks = new ArrayList<>(Arrays.asList(
+                new Block(0, 404, 228, 600 - 404, ""),
+                new Block(229, 221, 308 - 229, 600 - 221, ""),
+                new Block(308, 515, 1268 - 308, 600 - 515, ""),
+                new Block(387, 382, 546 - 387, 515 - 382, ""),
+                new Block(680, 336, 839 - 680, 515 - 336, ""),
+                new Block(1002, 191, 1205 - 1002, 515-191, ""),
+                new Block(1268, 396, 1600 - 1268, 600-396, ""),
+                new Block(181, 0, 1450 - 181, 119, "")
+        ));
+        currentLevel.setBackground(new javafx.scene.image.Image(imageUrlFire), new javafx.scene.image.Image(imageUrlIce));
+        currentLevel.Resize();
+        currentLevel.setBlocks(blocks);
+        currentLevel.setExitBlock(new Rectangle2D(1550, 0, 50, 396));
+        currentLevel.startX = 150;
+
+        currentLevel.enemies = new ArrayList<>();
+        currentLevel.setTips("pressing c make also spider go up with web");
+        Spider spider1 = new Spider(350, 514, 40, 40, currentLevel);
+        spider1.setXLimit(350, 720);
+        currentLevel.enemies.add(spider1);
+        Spider spider2 = new Spider(1100, 514, 20, 20, currentLevel);
+        spider2.setXLimit(1100, 1220);
+        currentLevel.enemies.add(spider2);
     }
 }
