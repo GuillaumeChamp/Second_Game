@@ -17,6 +17,5 @@ public class Exit extends Block{
     public Exit(double x, double y, double width, double height, String type,int destination) {
         super(x, y, width, height, type);
         link = destination;
-        skin = new Image("resources/breakable.png");
     }
 }

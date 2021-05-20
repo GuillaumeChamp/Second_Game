@@ -59,7 +59,7 @@ public interface DefineLevel {
         currentLevel.setExitBlock(new Rectangle2D(750,348,50,535-348));
         currentLevel.setBackground(new javafx.scene.image.Image(imageUrl),new javafx.scene.image.Image(imageUrl));
         currentLevel.Resize();
-        currentLevel.setTips("go to the right");
+        currentLevel.setTips("I can only go right");
         currentLevel.enemies = new ArrayList<>();
     }
     /**
@@ -86,7 +86,7 @@ public interface DefineLevel {
                 new Water(565,508,694-565,600-508),
                 new Water(1271,453,1370-1271,490-453)
         ));
-        currentLevel.setTips("press c to freeze the water");
+        currentLevel.setTips("maybe I can try to freeze this water with my E tem");
         currentLevel.setBackground(new javafx.scene.image.Image(imageUrlFire),new javafx.scene.image.Image(imageUrlIce));
         currentLevel.setIce(ice);
         currentLevel.setExitBlock(new Rectangle2D(1550,340,50,496-348));
@@ -113,7 +113,7 @@ public interface DefineLevel {
         currentLevel.startX = 150;
 
         currentLevel.enemies = new ArrayList<>();
-        currentLevel.setTips("pressing c make also spider go up with web");
+        currentLevel.setTips("I really don't like these spiders");
         Spider spider1 = new Spider(350, 514, 40, 40, currentLevel);
         spider1.setXLimit(350, 720);
         currentLevel.enemies.add(spider1);
@@ -141,7 +141,7 @@ public interface DefineLevel {
         currentLevel.startX = 100;
 
         currentLevel.enemies = new ArrayList<>();
-        currentLevel.setTips("you should try to think by yourself now");
+        currentLevel.setTips("I hope be able to go to home");
         Spider spider1 = new Spider(380, 1114, 40, 40, currentLevel);
         spider1.setXLimit(380, 600);
         spider1.setYLimit(1114,574);
@@ -173,7 +173,7 @@ public interface DefineLevel {
         ));
         currentLevel.setBackground(new javafx.scene.image.Image(imageUrlFire),new javafx.scene.image.Image(imageUrlIce));
         currentLevel.setIce(ice);
-        currentLevel.setTips("");
+        currentLevel.setTips("I ... don't know where am I");
         currentLevel.setExitBlock(new Rectangle2D(1550,348,50,496-348));
         currentLevel.Resize();
         currentLevel.enemies = new ArrayList<>();
@@ -199,7 +199,7 @@ public interface DefineLevel {
         currentLevel.startX = 150;
 
         currentLevel.enemies = new ArrayList<>();
-        currentLevel.setTips("pressing c make also spider go up with web");
+        currentLevel.setTips("I think I'm  inside there nest");
         Spider spider1 = new Spider(350, 514, 40, 40, currentLevel);
         spider1.setXLimit(350, 720);
         currentLevel.enemies.add(spider1);
