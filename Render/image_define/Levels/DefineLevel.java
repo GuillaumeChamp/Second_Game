@@ -101,6 +101,7 @@ public interface DefineLevel {
         currentLevel.setBackground(new javafx.scene.image.Image(imageUrlFire),new javafx.scene.image.Image(imageUrlIce));
         currentLevel.Resize();
         currentLevel.setBlocks(blocks);
+        currentLevel.startX = 150;
 
         currentLevel.enemies = new ArrayList<>();
         currentLevel.setTips("pressing c make also spider go up with web");
@@ -126,6 +127,8 @@ public interface DefineLevel {
         currentLevel.setBackground(new javafx.scene.image.Image(imageUrlFire),new javafx.scene.image.Image(imageUrlIce));
         currentLevel.setBlocks(blocks);
         currentLevel.setRatio(2);
+        //adding start x position
+        currentLevel.startX = 100;
 
         currentLevel.enemies = new ArrayList<>();
         currentLevel.setTips("you should try to think by yourself now");

@@ -90,6 +90,10 @@ public class Render extends Application {
                 if (input.contains(KeyCode.Z)) {
                     if (player.CanJump()||player.location.ThereIsALadder(player.skin.getPositionX(),player.skin.getPositionY())) player.skin.addForces(0, -20);
                 }
+                // H is the help key
+                if (input.contains(KeyCode.H)) {
+                    player.skin.setPosition(currentLevel.startX, player.skin.currentBlock(player.location, currentLevel.startX,player.skin.getPositionY()).getBlock().getMinY()-1);
+                }
                 currentLevel.updateLevel(t);
                 player.updateSkin();
 
@@ -99,7 +103,7 @@ public class Render extends Application {
                     player.location.clear();
                     player.nextLevel = false;
                     currentLevel.modifyLevel(currentLevel, currentLevelNum);
-                    player.skin.setPosition(0, player.skin.currentBlock(player.location, 0,player.skin.getPositionY()).getBlock().getMinY()-1);
+                    player.skin.setPosition(currentLevel.startX, player.skin.currentBlock(player.location, 0,player.skin.getPositionY()).getBlock().getMinY()-1);
                 }
 
                 double OffSetLandX = player.skin.getPositionX() - (width >> 1);

@@ -23,6 +23,7 @@ public class Level implements DefineLevel {
     private double sizeX;
     private double sizeY;
     private double ratio;
+    public double startX;
     public ArrayList<image_define.MovingAnimatedImage> enemies = new ArrayList<>();
     private String tips = "";
 
@@ -35,6 +36,7 @@ public class Level implements DefineLevel {
         this.sizeY = height;
         this.sizeX = width;
         this.ratio = 1;
+        this.startX = 0;
     }
 
     public void setRatio(double ratio) {
