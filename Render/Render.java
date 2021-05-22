@@ -5,7 +5,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
-import javafx.scene.layout.VBox;
 import javafx.stage.*;
 import javafx.scene.*;
 import javafx.scene.canvas.*;
@@ -17,7 +16,7 @@ public class Render extends Application {
     final long width = 800; //width of the window
     final long height = 600; //height of the window
     SoundBackground music= new SoundBackground();
-    Integer currentLevelNum = 0; //todo : delete that after test
+    Integer currentLevelNum = 5; //todo : delete that after test
     private Scene menuScene;
     private Scene theScene;
 
@@ -38,15 +37,15 @@ public class Render extends Application {
             startNanoTime = System.nanoTime();
             mainGameLoopTimer.start();
         });
-        startButton.setLayoutX(width/2 - 10);
-        startButton.setLayoutY(height/2 - 100);
+        startButton.setLayoutX((width >> 1) - 10);
+        startButton.setLayoutY((height >> 1) - 100);
         Button exitButton = new Button("Exit");
         exitButton.setOnAction(e -> theStage.close());
-        exitButton.setLayoutX(width/2 - 10);
-        exitButton.setLayoutY(height/2 - 50);
+        exitButton.setLayoutX((width >> 1) - 10);
+        exitButton.setLayoutY((height >> 1) - 50);
         Label controlInfo = new Label("H: restart the current level\nE: switch between ice/fire\nD: go right\nQ: go left\nZ: go upward");
-        controlInfo.setLayoutX(width*2/5);
-        controlInfo.setLayoutY(height/2);
+        controlInfo.setLayoutX((width * 2) / 5);
+        controlInfo.setLayoutY(height >> 1);
 
         Group root = new Group();
         menuScene = new Scene(root);

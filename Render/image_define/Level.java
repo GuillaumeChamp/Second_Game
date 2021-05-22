@@ -115,6 +115,7 @@ public class Level implements DefineLevel {
     public void clear(){
         ladder= new ArrayList<>();
         enemies= new ArrayList<>();
+        ice = new ArrayList<>();
         isFire=true;
         exitList.clear();
     }

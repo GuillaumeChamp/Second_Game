@@ -35,6 +35,12 @@ public interface DefineLevel {
             case 5:
                 Level5(currentLevel);
                 break;
+            case 6:
+                Level6(currentLevel);
+                break;
+            case 101:
+                SecretLevel(currentLevel);
+                break;
             default:
                 LevelEntry(currentLevel);
                 break;
@@ -109,7 +115,7 @@ public interface DefineLevel {
         currentLevel.setBackground(new javafx.scene.image.Image(imageUrlFire),new javafx.scene.image.Image(imageUrlIce));
         currentLevel.Resize();
         currentLevel.setBlocks(blocks);
-        currentLevel.addExitBlock(new Exit(1550,348,50,600-348,"",3));
+        currentLevel.addExitBlock(new Exit(1550,348,50,600-348,"",4));
         currentLevel.startX = 150;
 
         currentLevel.enemies = new ArrayList<>();
@@ -165,7 +171,7 @@ public interface DefineLevel {
                 new Block(139,0,1423-139,176,"")
         ));
         currentLevel.setBlocks(blocks);
-
+        currentLevel.startX = 100;
         ArrayList<Water> ice = new ArrayList<>(Arrays.asList(
                 new Water(229,422,786-229,490-422),
                 new Water(787,422,1092-787,459-422),
@@ -199,12 +205,70 @@ public interface DefineLevel {
         currentLevel.startX = 150;
 
         currentLevel.enemies = new ArrayList<>();
-        currentLevel.setTips("I think I'm  inside there nest");
-        Spider spider1 = new Spider(350, 514, 40, 40, currentLevel);
-        spider1.setXLimit(350, 720);
+        currentLevel.setTips("I think I'm  inside their nest");
+        Spider spider1 = new Spider(100, 404, 20, 20, currentLevel);
+        spider1.setXLimit(100, 225-20);
         currentLevel.enemies.add(spider1);
-        Spider spider2 = new Spider(1100, 514, 20, 20, currentLevel);
-        spider2.setXLimit(1100, 1220);
+        Spider spider2 = new Spider(229, 221, 20, 20, currentLevel);
+        spider2.setXLimit(229, 309);
         currentLevel.enemies.add(spider2);
+        Spider spider3 = new Spider(310, 513, 20, 20, currentLevel);
+        spider3.setXLimit(310, 385-20);
+        spider3.setGroundOnly();
+        currentLevel.enemies.add(spider3);
+        Spider spider4 = new Spider(585, 514, 60, 60, currentLevel);
+        spider4.setXLimit(547, 680-60);
+        spider4.setGroundOnly();
+        currentLevel.enemies.add(spider4);
+        Spider spider5 = new Spider(842, 514, 50, 50, currentLevel);
+        spider5.setXLimit(842, 1000-50);
+        currentLevel.enemies.add(spider5);
+    }
+    static void Level6(Level currentLevel) {
+        String imageUrlFire = "resources/Level/Level_6_fire_V1.png";
+        String imageUrlIce = "resources/Level/Level_6_ice_V1.png";
+        ArrayList<Block> blocks = new ArrayList<>(Arrays.asList(
+                new Block(0,404,228,600-404,""),
+                new Block(229,491,378-229,600-491,""),
+                new Block(379,540,787-379,600-540,""),
+                new Block(787,460,913-787,600-460,""),
+                new Block(976,460,1091-787,600-460,""),
+                new Block(1091,541,1321-1091,600-373,""),
+                new Block(1321,422,1390-1321,600-422,""),
+                new Block(1390,496,1600-1390,600-496,""),
+                new Block(139,0,1423-139,176,""),
+                new Block(1321,0,1321-1090,351,"")
+        ));
+        currentLevel.setBlocks(blocks);
+        currentLevel.startX = 100;
+        ArrayList<Water> ice = new ArrayList<>(Arrays.asList(
+                new Water(229,422,786-229,490-422),
+                new Water(379,491,786-379,539-491),
+                new Water(787,422,1092-787,460-422),
+                new Water(914,460,975-914,600-460),
+                new Water(1092,422,1320-1092,540-422)
+        ));
+        currentLevel.setBackground(new javafx.scene.image.Image(imageUrlFire),new javafx.scene.image.Image(imageUrlIce));
+        currentLevel.setIce(ice);
+        currentLevel.setTips("Is that a rink ?");
+        currentLevel.addExitBlock(new Exit(1550,348,50,496-348,"",7));
+        currentLevel.addExitBlock(new Exit(914,550,60,50,"",101));
+        currentLevel.Resize();
+
+    }
+    static void SecretLevel(Level currentLevel){
+        String imageUrlFire = "resources/Level/Secret_Level.png";
+        String imageUrlIce = "resources/Level/Secret_Level.png";
+        ArrayList<Block> blocks = new ArrayList<>(Arrays.asList(
+                new Block(0, 0, 198, 600, ""),
+                new Block(0, 514, 800, 600 - 514, ""),
+                new Block(600, 0, 200, 443, "")
+        ));
+        currentLevel.setBackground(new javafx.scene.image.Image(imageUrlFire), new javafx.scene.image.Image(imageUrlIce));
+        currentLevel.setTips("I'm not suppose to be here");
+        currentLevel.Resize();
+        currentLevel.setBlocks(blocks);
+        currentLevel.addExitBlock(new Exit(750, 443, 50, 80,"",6));
+        currentLevel.startX = 220;
     }
 }
