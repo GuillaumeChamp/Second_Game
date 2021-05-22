@@ -115,7 +115,7 @@ public interface DefineLevel {
         currentLevel.setBackground(new javafx.scene.image.Image(imageUrlFire),new javafx.scene.image.Image(imageUrlIce));
         currentLevel.Resize();
         currentLevel.setBlocks(blocks);
-        currentLevel.addExitBlock(new Exit(1550,348,50,600-348,"",4));
+        currentLevel.addExitBlock(new Exit(1550,348,50,600-348,"",3));
         currentLevel.startX = 150;
 
         currentLevel.enemies = new ArrayList<>();
@@ -143,13 +143,12 @@ public interface DefineLevel {
         currentLevel.setBlocks(blocks);
         currentLevel.addExitBlock(new Exit(750,0,50,392,"",4));
         currentLevel.setRatio(2);
-        //adding start x position
         currentLevel.startX = 100;
 
         currentLevel.enemies = new ArrayList<>();
         currentLevel.setTips("I hope be able to go to home");
         Spider spider1 = new Spider(380, 1114, 40, 40, currentLevel);
-        spider1.setXLimit(380, 600);
+        spider1.setXLimit(540, 800);
         spider1.setYLimit(1114,574);
         currentLevel.enemies.add(spider1);
         Spider spider2 = new Spider(47, 672, 20, 20, currentLevel);
@@ -248,6 +247,7 @@ public interface DefineLevel {
                 new Water(914,460,975-914,600-460),
                 new Water(1092,422,1320-1092,540-422)
         ));
+        currentLevel.addBreakable(new Block(1321,352,1390-1321,421-352,"breakable"));
         currentLevel.setBackground(new javafx.scene.image.Image(imageUrlFire),new javafx.scene.image.Image(imageUrlIce));
         currentLevel.setIce(ice);
         currentLevel.setTips("Is that a rink ?");

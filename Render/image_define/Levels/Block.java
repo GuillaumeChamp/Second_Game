@@ -18,8 +18,8 @@ public class Block {
         block = new Rectangle2D(x,y,width,height);
         switch (type){
             //later grass and more argument will be add
-            case "rock" :
-                //path to fire shape block
+            case "breakable" :
+                skin = new Image("resources/Level/breakable.png",width,height,true,true);
                 break;
             case "grass":
                 //path to ice shape block
@@ -28,6 +28,10 @@ public class Block {
                 //path to no shape block
                 break;
         }
+    }
+
+    public Image getSkin() {
+        return skin;
     }
 
     public Rectangle2D getBlock() {

@@ -16,7 +16,7 @@ public class Render extends Application {
     final long width = 800; //width of the window
     final long height = 600; //height of the window
     SoundBackground music= new SoundBackground();
-    Integer currentLevelNum = 5; //todo : delete that after test
+    Integer currentLevelNum = 0; //todo : delete that after test
     private Scene menuScene;
     private Scene theScene;
 
