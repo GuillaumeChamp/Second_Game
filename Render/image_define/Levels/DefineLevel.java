@@ -62,7 +62,7 @@ public interface DefineLevel {
         currentLevel.addExitBlock(new Exit(750,348,50,535-348,"",1));
         currentLevel.setBackground(new javafx.scene.image.Image(imageUrl),new javafx.scene.image.Image(imageUrl));
         currentLevel.Resize();
-        currentLevel.setTips("I can only go right");
+        currentLevel.setTips("I fell from a high place");
         currentLevel.enemies = new ArrayList<>();
     }
     /**
