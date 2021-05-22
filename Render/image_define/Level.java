@@ -163,13 +163,6 @@ public class Level implements DefineLevel {
     public void drawLevel(GraphicsContext gc, double offsetLandX, double offsetLandY, double time) {
         gc.drawImage(this.getBackground(), offsetLandX, offsetLandY, sizeX, sizeY,0,0,sizeX,sizeY);
         gc.fillText(tips, 400, 300);
-        for (image_define.MovingAnimatedImage enemy : enemies) {
-            double XoffsetEnemy = enemy.getPositionX() - offsetLandX;
-            double YoffsetEnemy = enemy.getPositionY() - offsetLandY;
-            if (XoffsetEnemy > 0 && XoffsetEnemy < sizeX) {
-                gc.drawImage(enemy.getFrame(time), XoffsetEnemy, (YoffsetEnemy- enemy.getWidth()), enemy.getWidth(), enemy.getHeight());
-            }
-        }
         for (image_define.MovingAnimatedImage web : ladder){
             double OffSetWeb = web.getPositionX() - offsetLandX;
             double OffSetWebY = web.getPositionY() - offsetLandY;
@@ -177,8 +170,15 @@ public class Level implements DefineLevel {
                 gc.drawImage(web.getFrame(time), OffSetWeb, OffSetWebY, web.getWidth(), web.getHeight());
             }
         }
+        for (image_define.MovingAnimatedImage enemy : enemies) {
+            double XoffsetEnemy = enemy.getPositionX() - offsetLandX;
+            double YoffsetEnemy = enemy.getPositionY() - offsetLandY;
+            if (XoffsetEnemy > 0 && XoffsetEnemy < sizeX) {
+                gc.drawImage(enemy.getFrame(time), XoffsetEnemy, (YoffsetEnemy- enemy.getWidth()), enemy.getWidth(), enemy.getHeight());
+            }
+        }
         for(Block block : breakableList){
-            gc.drawImage(block.getSkin(),block.getBlock().getMinX(),block.getBlock().getMinY());
+            gc.drawImage(block.getSkin(),block.getBlock().getMinX()-offsetLandX,block.getBlock().getMinY());
         }
     }
 }

@@ -19,7 +19,7 @@ public class Block {
         switch (type){
             //later grass and more argument will be add
             case "breakable" :
-                skin = new Image("resources/Level/breakable.png",width,height,true,true);
+                skin = new Image("resources/Level/breakable.png",width,height,false,true);
                 break;
             case "grass":
                 //path to ice shape block

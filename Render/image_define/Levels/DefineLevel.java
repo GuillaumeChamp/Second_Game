@@ -1,13 +1,10 @@
 package image_define.Levels;
 
-import javafx.geometry.Rectangle2D;
 import image_define.ExtendImage.Spider;
 import image_define.Level;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 
-//TODO : make a level loader from files
 
 public interface DefineLevel {
     /**
@@ -203,7 +200,6 @@ public interface DefineLevel {
         currentLevel.addExitBlock(new Exit(1550, 0, 50, 396,"",6));
         currentLevel.startX = 150;
 
-        currentLevel.enemies = new ArrayList<>();
         currentLevel.setTips("I think I'm  inside their nest");
         Spider spider1 = new Spider(100, 404, 20, 20, currentLevel);
         spider1.setXLimit(100, 225-20);
@@ -231,7 +227,7 @@ public interface DefineLevel {
                 new Block(229,491,378-229,600-491,""),
                 new Block(379,540,787-379,600-540,""),
                 new Block(787,460,913-787,600-460,""),
-                new Block(976,460,1091-787,600-460,""),
+                new Block(976,460,1091-976,600-460,""),
                 new Block(1091,541,1321-1091,600-373,""),
                 new Block(1321,422,1390-1321,600-422,""),
                 new Block(1390,496,1600-1390,600-496,""),
@@ -247,13 +243,16 @@ public interface DefineLevel {
                 new Water(914,460,975-914,600-460),
                 new Water(1092,422,1320-1092,540-422)
         ));
-        currentLevel.addBreakable(new Block(1321,352,1390-1321,421-352,"breakable"));
+        currentLevel.addBreakable(new Block(1321,352,1391-1321,422-352,"breakable"));
         currentLevel.setBackground(new javafx.scene.image.Image(imageUrlFire),new javafx.scene.image.Image(imageUrlIce));
         currentLevel.setIce(ice);
         currentLevel.setTips("Is that a rink ?");
         currentLevel.addExitBlock(new Exit(1550,348,50,496-348,"",7));
         currentLevel.addExitBlock(new Exit(914,550,60,50,"",101));
         currentLevel.Resize();
+        Spider spider1 = new Spider(390, 540, 20, 20, currentLevel);
+        spider1.setXLimit(390, 775-20);
+        currentLevel.enemies.add(spider1);
 
     }
     static void SecretLevel(Level currentLevel){
