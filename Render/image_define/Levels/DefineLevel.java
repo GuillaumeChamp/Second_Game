@@ -256,7 +256,7 @@ public interface DefineLevel {
 
     }
     static void SecretLevel(Level currentLevel){
-        String imageUrlFire = "resources/Level/Secret_Level.png";
+        String imageUrlFire = "resources/Level/Secret_Level_A.png";
         String imageUrlIce = "resources/Level/Secret_Level.png";
         ArrayList<Block> blocks = new ArrayList<>(Arrays.asList(
                 new Block(0, 0, 198, 600, ""),
