@@ -16,7 +16,6 @@ public class Render extends Application {
     final long width = 800; //width of the window
     final long height = 600; //height of the window
     SoundBackground music= new SoundBackground();
-    Integer currentLevelNum = 6; //todo : delete that after test
     private Scene menuScene;
     private Scene theScene;
 
@@ -61,7 +60,7 @@ public class Render extends Application {
         gc.drawImage(background3,0,0);
     }
 
-    private void defineGameLoop(Stage theStage) {
+    private void defineGameLoop() {
         ArrayList<KeyCode> input = new ArrayList<>(); //store the keyboard input
 
         Group root = new Group();
@@ -72,7 +71,7 @@ public class Render extends Application {
         GraphicsContext gc = canvas.getGraphicsContext2D();
 
         Level currentLevel = new Level(width, height);
-        currentLevel.modifyLevel(currentLevel, currentLevelNum);//todo : delete that after test
+        currentLevel.modifyLevel(currentLevel, 0);
         Player player = new Player(210,436,30,60, 40, currentLevel);
         theScene.setOnKeyPressed(e -> {
                     KeyCode code = e.getCode();
@@ -135,7 +134,7 @@ public class Render extends Application {
         music.start(theStage);
 
         defineMainMenu(theStage);
-        defineGameLoop(theStage);
+        defineGameLoop();
         
         theStage.setScene(menuScene);
         theStage.show();

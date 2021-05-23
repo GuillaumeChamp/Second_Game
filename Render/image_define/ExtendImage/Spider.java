@@ -46,6 +46,11 @@ public class Spider extends MovingAnimatedImage {
         this.xEnd = xEnd;
     }
 
+    /**
+     * Define the range of movement of the spider
+     * @param yLow minimum y of the patrol range
+     * @param yHigh maximum y of the patrol range
+     */
     public void setYLimit(int yLow, int yHigh) {
         this.yLow = yLow;
         this.yHigh = yHigh;
@@ -61,10 +66,18 @@ public class Spider extends MovingAnimatedImage {
         this.groundOnly = !this.groundOnly;
     }
 
+    /**
+     * Place a web at the current location of the spider matching with the size of the spider and its patrol range
+     * @return the web
+     */
     public Web putweb(){
         return new Web(this.getPositionX(),this.yHigh,this.getWidth(),(int) this.getPositionY());
     }
 
+    /**
+     * Make the target move away from this spider
+     * @param target of the interaction
+     */
     public void Hit(MovingAnimatedImage target){
         Rectangle2D spiderHitBox = new Rectangle2D(positionX,positionY,this.getWidth(),this.getHeight());
         Rectangle2D targetHitBox = new Rectangle2D(target.getPositionX(),target.getPositionY(),target.getWidth(),target.getHeight());

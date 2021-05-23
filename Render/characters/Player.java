@@ -17,10 +17,18 @@ public class Player {
         skin.setPosition(x, 10);
         location = currentLevel;
     }
+
+    /**
+     * methode to limit the place where the player can jump
+     * @return true if player can jump from here
+     */
     public boolean CanJump(){
         return skin.CanJump(location);
     }
 
+    /**
+     * Update the position of the player checking collision and the end of the level
+     */
     public void updateSkin() {
         for (MovingAnimatedImage e :location.enemies){
             if (e instanceof Spider) ((Spider) e).Hit(skin);
@@ -29,6 +37,11 @@ public class Player {
         for (Exit exit : location.getExitList())
         if (exit.getBlock().intersects(this.skin.getPositionX(),this.skin.getPositionY(),skin.getWidth(),skin.getHeight())) this.exit(exit);
     }
+
+    /**
+     * Make the player go to the next level
+     * @param exit hit by the player
+     */
     public void exit(Exit exit){
         int newLevel = exit.getLink();
         location.clear();

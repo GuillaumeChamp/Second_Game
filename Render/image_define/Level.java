@@ -18,9 +18,8 @@ public class Level implements DefineLevel {
     private javafx.scene.image.Image iceBackground;
     private javafx.scene.image.Image fireBackground;
     private ArrayList<Block> blocks = new ArrayList<>();
-    private Rectangle2D exitBlock;
-    private ArrayList<Exit> exitList = new ArrayList<>();
-    private ArrayList<Block> breakableList = new ArrayList<>();
+    private final ArrayList<Exit> exitList = new ArrayList<>();
+    private final ArrayList<Block> breakableList = new ArrayList<>();
     private ArrayList<Water> ice = new ArrayList<>();
     private ArrayList<Web> ladder= new ArrayList<>();
     private double sizeX;
@@ -47,6 +46,7 @@ public class Level implements DefineLevel {
     }
 
     /**
+     * define levels function.
      * Load to this level the background
      * @param fire background of the fire side
      * @param ice background of the ice side
@@ -56,24 +56,32 @@ public class Level implements DefineLevel {
         fireBackground=fire;
     }
 
+    /**
+     * define levels function.
+     * @param tips phrase to show
+     */
     public void setTips(String tips) {
         this.tips = tips;
     }
 
+    /**
+     * define levels function.
+     * @param blocks add this list of block at the level
+     */
     public void setBlocks(ArrayList<Block> blocks) {
         this.blocks = blocks;
     }
 
+    /**
+     * Define levels function.
+     * Used to add an exit.
+     * @param exitBlock to add
+     */
     public void addExitBlock(Exit exitBlock) {
         this.exitList.add(exitBlock);
     }
-
-    public ArrayList<Exit> getExitList() {
-        return exitList;
-    }
-
     /**
-     * function use to define the level
+     * define levels function.
      * @param breakable add this to breakable block list
      */
     public void addBreakable(Block breakable){
@@ -92,10 +100,11 @@ public class Level implements DefineLevel {
         }
     }
 
-    public ArrayList<Block> getBlocks() {
-        return blocks;
-    }
-
+    /**
+     * define levels function.
+     * Use to load the water blocks
+     * @param ice list of water blocks
+     */
     public void setIce(ArrayList<Water> ice) {
         this.ice = ice;
     }
@@ -111,7 +120,17 @@ public class Level implements DefineLevel {
     public double getSizeY() {
         return sizeY;
     }
+    public ArrayList<Exit> getExitList() {
+        return exitList;
+    }
 
+    public ArrayList<Block> getBlocks() {
+        return blocks;
+    }
+    /**
+     * function to change to level.
+     * Need to be call after the end of a level
+     */
     public void clear(){
         ladder= new ArrayList<>();
         enemies= new ArrayList<>();
@@ -120,6 +139,12 @@ public class Level implements DefineLevel {
         exitList.clear();
     }
 
+    /**
+     * function used to check if the player can climb
+     * @param X position of the player
+     * @param Y position of the player
+     * @return true if the player can climb here
+     */
     public boolean ThereIsALadder(double X, double Y) {
         boolean ans= false;
         for (Web string : ladder){
@@ -129,20 +154,38 @@ public class Level implements DefineLevel {
         return ans;
     }
 
+    /**
+     * function to define levels
+     * Make the size of the level matching with
+     */
     public void Resize(){
         this.sizeX= fireBackground.getWidth();
         this.sizeY= fireBackground.getHeight();
 
     }
+
+    /**
+     * function for loop. Animate the level.
+     * @param time to animate image
+     */
     public void updateLevel(double time) {
         for (image_define.MovingAnimatedImage enemy : enemies) {
             enemy.update(time);
         }
     }
+
+    /**
+     * change the side of the level and behaviour of entities
+     */
     public void swap() {
         isFire = !isFire;
         this.setGroundOnly();
     }
+
+    /**
+     * Sub-function of swap
+     * Make the spiders swap
+     */
     public void setGroundOnly() {
         ArrayList<Web> NewLadder = new ArrayList<>();
         for (image_define.MovingAnimatedImage enemy : enemies) {
@@ -155,11 +198,14 @@ public class Level implements DefineLevel {
             this.ladder=NewLadder;
         }
     }
-    public Image getBackground(){
-        if (isFire) return fireBackground;
-        return iceBackground;
-    }
 
+    /**
+     * Draw all entity attached to this level
+     * @param gc GraphicsContext of the active application
+     * @param offsetLandX of the window
+     * @param offsetLandY of the window
+     * @param time to animate the entities (only use for differential)
+     */
     public void drawLevel(GraphicsContext gc, double offsetLandX, double offsetLandY, double time) {
         gc.drawImage(this.getBackground(), offsetLandX, offsetLandY, sizeX, sizeY,0,0,sizeX,sizeY);
         gc.fillText(tips, 400, 300);
@@ -180,5 +226,15 @@ public class Level implements DefineLevel {
         for(Block block : breakableList){
             gc.drawImage(block.getSkin(),block.getBlock().getMinX()-offsetLandX,block.getBlock().getMinY());
         }
+    }
+
+    /**
+     * Sub-function of draw level
+     * Print the background matching with the active side
+     * @return active background
+     */
+    public Image getBackground(){
+        if (isFire) return fireBackground;
+        return iceBackground;
     }
 }

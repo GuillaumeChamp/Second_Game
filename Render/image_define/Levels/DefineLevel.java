@@ -35,6 +35,9 @@ public interface DefineLevel {
             case 6:
                 Level6(currentLevel);
                 break;
+            case 100:
+                End(currentLevel);
+                break;
             case 101:
                 SecretLevel(currentLevel);
                 break;
@@ -113,7 +116,7 @@ public interface DefineLevel {
         currentLevel.Resize();
         currentLevel.setBlocks(blocks);
         currentLevel.addExitBlock(new Exit(1550,348,50,600-348,"",3));
-        currentLevel.startX = 150;
+        currentLevel.startX = 10;
 
         currentLevel.enemies = new ArrayList<>();
         currentLevel.setTips("I really don't like these spiders");
@@ -247,7 +250,7 @@ public interface DefineLevel {
         currentLevel.setBackground(new javafx.scene.image.Image(imageUrlFire),new javafx.scene.image.Image(imageUrlIce));
         currentLevel.setIce(ice);
         currentLevel.setTips("Is that a rink ?");
-        currentLevel.addExitBlock(new Exit(1550,348,50,496-348,"",7));
+        currentLevel.addExitBlock(new Exit(1550,348,50,496-348,"",100));
         currentLevel.addExitBlock(new Exit(914,550,60,50,"",101));
         currentLevel.Resize();
         Spider spider1 = new Spider(390, 540, 20, 20, currentLevel);
@@ -269,5 +272,21 @@ public interface DefineLevel {
         currentLevel.setBlocks(blocks);
         currentLevel.addExitBlock(new Exit(750, 443, 50, 80,"",6));
         currentLevel.startX = 220;
+    }
+    static void End(Level currentLevel){
+        String imageUrlFire = "resources/Level/Level_end_V1.png";
+        String imageUrlIce = "resources/Level/Level_end_V1.png";
+        ArrayList<Block> blocks = new ArrayList<>(Arrays.asList(
+                new Block(0, 432, 299, 600-432, ""),
+                new Block(299, 398, 374-299, 600 - 398, ""),
+                new Block(374, 365, 523-374, 600-374, ""),
+                new Block(532, 334, 800-532, 600-532, "")
+        ));
+        currentLevel.setBackground(new javafx.scene.image.Image(imageUrlFire), new javafx.scene.image.Image(imageUrlIce));
+        currentLevel.setTips("Finally, my house is near");
+        currentLevel.Resize();
+        currentLevel.setBlocks(blocks);
+        currentLevel.addExitBlock(new Exit(780, 300, 20, 80,"",100));
+        currentLevel.startX = 10;
     }
 }

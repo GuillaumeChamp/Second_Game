@@ -153,6 +153,11 @@ public class PlayerSkin extends MovingAnimatedImage {
             }
         }
     }
+
+    /**
+     * Break the wall in front of the player if the wall is breakable and the player fast enough
+     * @param location active level
+     */
     public void breakBlock(Level location){
         Block frontBlock = currentBlock(location,positionX+50,positionY-10);
         if (Math.abs(velocityX)>9) location.breakBlock(frontBlock);
