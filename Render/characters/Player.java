@@ -6,6 +6,8 @@ import image_define.Level;
 import image_define.Levels.Exit;
 import image_define.MovingAnimatedImage;
 
+import java.util.ArrayList;
+
 public class Player {
     public PlayerSkin skin;
     public Level location;
@@ -34,7 +36,8 @@ public class Player {
             if (e instanceof Spider) ((Spider) e).Hit(skin);
         }
         this.skin.update(this.location);
-        for (Exit exit : location.getExitList()) {
+        ArrayList<Exit> exits= location.getExitList();
+        for (Exit exit : exits) {
             if (exit.getBlock().intersects(this.skin.getPositionX(),this.skin.getPositionY(),skin.getWidth(),skin.getHeight())) {
                 if (location.endGame) {
                     return true;

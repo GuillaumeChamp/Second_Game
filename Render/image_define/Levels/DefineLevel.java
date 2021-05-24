@@ -120,10 +120,10 @@ public interface DefineLevel {
 
         currentLevel.enemies = new ArrayList<>();
         currentLevel.setTips("I really don't like these spiders");
-        Spider spider1 = new Spider(350, 514, 40, 40, currentLevel);
+        Spider spider1 = new Spider(350, 514, 40, 40);
         spider1.setXLimit(350, 720);
         currentLevel.enemies.add(spider1);
-        Spider spider2 = new Spider(1100, 514, 20, 20, currentLevel);
+        Spider spider2 = new Spider(1100, 514, 20, 20);
         spider2.setXLimit(1100, 1220);
         currentLevel.enemies.add(spider2);
 
@@ -142,16 +142,15 @@ public interface DefineLevel {
         currentLevel.setBackground(new javafx.scene.image.Image(imageUrlFire),new javafx.scene.image.Image(imageUrlIce));
         currentLevel.setBlocks(blocks);
         currentLevel.addExitBlock(new Exit(750,0,50,392,"",4));
-        currentLevel.setRatio(2);
         currentLevel.startX = 100;
 
         currentLevel.enemies = new ArrayList<>();
         currentLevel.setTips("I hope be able to go to home");
-        Spider spider1 = new Spider(380, 1114, 40, 40, currentLevel);
+        Spider spider1 = new Spider(380, 1114, 40, 40);
         spider1.setXLimit(540, 800);
         spider1.setYLimit(1114,574);
         currentLevel.enemies.add(spider1);
-        Spider spider2 = new Spider(47, 672, 20, 20, currentLevel);
+        Spider spider2 = new Spider(47, 672, 20, 20);
         spider2.setXLimit(47, 630-47);
         spider2.setYLimit(672,180);
         currentLevel.enemies.add(spider2);
@@ -204,21 +203,21 @@ public interface DefineLevel {
         currentLevel.startX = 150;
 
         currentLevel.setTips("I think I'm  inside their nest");
-        Spider spider1 = new Spider(100, 404, 20, 20, currentLevel);
+        Spider spider1 = new Spider(100, 404, 20, 20);
         spider1.setXLimit(100, 225-20);
         currentLevel.enemies.add(spider1);
-        Spider spider2 = new Spider(229, 221, 20, 20, currentLevel);
+        Spider spider2 = new Spider(229, 221, 20, 20);
         spider2.setXLimit(229, 309);
         currentLevel.enemies.add(spider2);
-        Spider spider3 = new Spider(310, 513, 20, 20, currentLevel);
+        Spider spider3 = new Spider(310, 513, 20, 20);
         spider3.setXLimit(310, 385-20);
         spider3.setGroundOnly();
         currentLevel.enemies.add(spider3);
-        Spider spider4 = new Spider(585, 514, 60, 60, currentLevel);
+        Spider spider4 = new Spider(585, 514, 60, 60);
         spider4.setXLimit(547, 680-60);
         spider4.setGroundOnly();
         currentLevel.enemies.add(spider4);
-        Spider spider5 = new Spider(842, 514, 50, 50, currentLevel);
+        Spider spider5 = new Spider(842, 514, 50, 50);
         spider5.setXLimit(842, 1000-50);
         currentLevel.enemies.add(spider5);
     }
@@ -253,7 +252,7 @@ public interface DefineLevel {
         currentLevel.addExitBlock(new Exit(1550,348,50,496-348,"",100));
         currentLevel.addExitBlock(new Exit(914,550,60,50,"",101));
         currentLevel.Resize();
-        Spider spider1 = new Spider(390, 540, 20, 20, currentLevel);
+        Spider spider1 = new Spider(390, 540, 20, 20);
         spider1.setXLimit(390, 775-20);
         currentLevel.enemies.add(spider1);
 

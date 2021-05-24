@@ -19,9 +19,7 @@ public class Render extends Application {
     private Scene menuScene;
     private Scene theScene;
     private Scene endScene;
-
     long startNanoTime;
-
     AnimationTimer mainGameLoopTimer;
 
     Image background0 = new Image( "resources/Level/Background/CloudsBack.png" );
@@ -42,7 +40,7 @@ public class Render extends Application {
         exitButton.setOnAction(e -> theStage.close());
         exitButton.setLayoutX((width >> 1) - 10);
         exitButton.setLayoutY((height >> 1) - 50);
-        Label controlInfo = new Label("H: restart the current level\nE: switch between ice/fire\nD: go right\nQ: go left\nZ: go upward");
+        Label controlInfo = new Label("R: restart the current level\nE: switch between ice/fire\nD: go right\nQ: go left\nZ: go upward");
         controlInfo.setLayoutX((width * 2) / 5);
         controlInfo.setLayoutY(height >> 1);
         Label creditInfo = new Label("credit: music is from TwinMusicom\n");
@@ -105,7 +103,8 @@ public class Render extends Application {
                     if (code==KeyCode.E){
                         currentLevel.swap();
                     }
-                    if(code==KeyCode.R) System.out.println(player.skin.getPositionX() + " " + player.skin.getPositionY());
+                    if(code==KeyCode.R) player.skin.setPosition(currentLevel.startX, player.skin.currentBlock(player.location, currentLevel.startX,player.skin.getPositionY()).getBlock().getMinY()-1);
+
                 }
         );
 
@@ -128,10 +127,6 @@ public class Render extends Application {
                 }
                 if (input.contains(KeyCode.Z)) {
                     if (player.CanJump()||player.location.ThereIsALadder(player.skin.getPositionX(),player.skin.getPositionY())) player.skin.addForces(0, -20);
-                }
-                // H is the help key
-                if (input.contains(KeyCode.H)) {
-                    player.skin.setPosition(currentLevel.startX, player.skin.currentBlock(player.location, currentLevel.startX,player.skin.getPositionY()).getBlock().getMinY()-1);
                 }
                 currentLevel.updateLevel(t);
                 Boolean shouldEndGame = player.updateSkin();

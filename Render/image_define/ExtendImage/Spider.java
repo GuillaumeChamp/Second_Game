@@ -1,6 +1,5 @@
 package image_define.ExtendImage;
 
-import image_define.Level;
 import image_define.MovingAnimatedImage;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.image.Image;
@@ -20,9 +19,8 @@ public class Spider extends MovingAnimatedImage {
      * @param y starting y position
      * @param width width of the spider
      * @param height height of the spider
-     * @param currentLevel active Level
      */
-    public Spider(int x, int y, int width, int height, Level currentLevel) {
+    public Spider(int x, int y, int width, int height) {
         super(x, y, width, height);
         this.groundOnly = true;
         this.speed = 1;

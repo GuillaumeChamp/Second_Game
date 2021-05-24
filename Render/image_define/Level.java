@@ -25,7 +25,6 @@ public class Level implements DefineLevel {
     private ArrayList<Web> ladder= new ArrayList<>();
     private double sizeX;
     private double sizeY;
-    private double ratio;
     public double startX;
     public ArrayList<image_define.MovingAnimatedImage> enemies = new ArrayList<>();
     private String tips = "";
@@ -38,13 +37,9 @@ public class Level implements DefineLevel {
     public Level(long width, long height){
         this.sizeY = height;
         this.sizeX = width;
-        this.ratio = 1;
         this.startX = 0;
     }
 
-    public void setRatio(double ratio) {
-        this.ratio = ratio;
-    }
 
     /**
      * define levels function.
