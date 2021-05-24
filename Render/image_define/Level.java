@@ -15,6 +15,7 @@ import java.util.ArrayList;
 
 public class Level implements DefineLevel {
     public boolean isFire=true;
+    public boolean endGame=false;
     private javafx.scene.image.Image iceBackground;
     private javafx.scene.image.Image fireBackground;
     private ArrayList<Block> blocks = new ArrayList<>();

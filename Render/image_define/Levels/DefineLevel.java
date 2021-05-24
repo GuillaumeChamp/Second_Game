@@ -287,6 +287,7 @@ public interface DefineLevel {
         currentLevel.Resize();
         currentLevel.setBlocks(blocks);
         currentLevel.addExitBlock(new Exit(780, 300, 20, 80,"",100));
+        currentLevel.endGame = true;
         currentLevel.startX = 10;
     }
 }

@@ -29,13 +29,20 @@ public class Player {
     /**
      * Update the position of the player checking collision and the end of the level
      */
-    public void updateSkin() {
+    public Boolean updateSkin() {
         for (MovingAnimatedImage e :location.enemies){
             if (e instanceof Spider) ((Spider) e).Hit(skin);
         }
         this.skin.update(this.location);
-        for (Exit exit : location.getExitList())
-        if (exit.getBlock().intersects(this.skin.getPositionX(),this.skin.getPositionY(),skin.getWidth(),skin.getHeight())) this.exit(exit);
+        for (Exit exit : location.getExitList()) {
+            if (exit.getBlock().intersects(this.skin.getPositionX(),this.skin.getPositionY(),skin.getWidth(),skin.getHeight())) {
+                if (location.endGame) {
+                    return true;
+                }
+                this.exit(exit);
+            }
+        }
+        return false;
     }
 
     /**

@@ -18,6 +18,7 @@ public class Render extends Application {
     SoundBackground music= new SoundBackground();
     private Scene menuScene;
     private Scene theScene;
+    private Scene endScene;
 
     long startNanoTime;
 
@@ -44,6 +45,9 @@ public class Render extends Application {
         Label controlInfo = new Label("H: restart the current level\nE: switch between ice/fire\nD: go right\nQ: go left\nZ: go upward");
         controlInfo.setLayoutX((width * 2) / 5);
         controlInfo.setLayoutY(height >> 1);
+        Label creditInfo = new Label("credit: music is from TwinMusicom\n");
+        creditInfo.setLayoutX((width * 2) / 5);
+        creditInfo.setLayoutY(height - 30);
 
         Group root = new Group();
         menuScene = new Scene(root);
@@ -52,6 +56,7 @@ public class Render extends Application {
         root.getChildren().add(startButton);
         root.getChildren().add(exitButton);
         root.getChildren().add(controlInfo);
+        root.getChildren().add(creditInfo);
 
         GraphicsContext gc = canvas.getGraphicsContext2D();
         gc.drawImage(background0,0,0);
@@ -60,7 +65,27 @@ public class Render extends Application {
         gc.drawImage(background3,0,0);
     }
 
-    private void defineGameLoop() {
+    private void defineEnd(Stage theStage) {
+        Button exitButton = new Button("Exit");
+        exitButton.setOnAction(e -> theStage.close());
+        exitButton.setLayoutX(width/6*5);
+        exitButton.setLayoutY(height/7*6);
+
+        Group root = new Group();
+        endScene = new Scene(root);
+        Canvas canvas = new Canvas(width, height);
+        root.getChildren().add(canvas);
+        root.getChildren().add(exitButton);
+
+        GraphicsContext gc = canvas.getGraphicsContext2D();
+        gc.drawImage(background0,0,0);
+        gc.drawImage(background1,0,0);
+        gc.drawImage(background2,0,0);
+        gc.drawImage(background3,0,0);
+        gc.drawImage(new Image( "resources/player/home.png" ), width/5, height/4, width/5*3, height/3*2);
+    }
+
+    private void defineGameLoop(Stage theStage) {
         ArrayList<KeyCode> input = new ArrayList<>(); //store the keyboard input
 
         Group root = new Group();
@@ -109,7 +134,11 @@ public class Render extends Application {
                     player.skin.setPosition(currentLevel.startX, player.skin.currentBlock(player.location, currentLevel.startX,player.skin.getPositionY()).getBlock().getMinY()-1);
                 }
                 currentLevel.updateLevel(t);
-                player.updateSkin();
+                Boolean shouldEndGame = player.updateSkin();
+                if (shouldEndGame) {
+                    theStage.setScene(endScene);
+                    this.stop();
+                }
 
                 double OffSetLandX = player.skin.getPositionX() - (width >> 1);
                 double OffSetLandY = player.skin.getPositionY() - (height >> 1);
@@ -134,7 +163,8 @@ public class Render extends Application {
         music.start(theStage);
 
         defineMainMenu(theStage);
-        defineGameLoop();
+        defineEnd(theStage);
+        defineGameLoop(theStage);
         
         theStage.setScene(menuScene);
         theStage.show();
