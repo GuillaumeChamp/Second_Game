@@ -11,7 +11,16 @@ public class LevelLoader {
     double startX = 0;
     double endX = 0;
 
-    public Level load(String path,int next,int secret) throws IOException {
+    /**
+     * Load the next level
+     * @param LevelIndex index of the level to load
+     * @param next index of the nest level
+     * @param secret index of the secret level
+     * @return the new loaded level
+     * @throws IOException if the level index if a wrong one
+     */
+    public Level load(int LevelIndex,int next,int secret) throws IOException {
+        String path = "resources/Level/Level" + LevelIndex + ".Level";
         BufferedReader reader = new BufferedReader(new FileReader(path));
         String currentLine = reader.readLine();
         Level level = new Level();
@@ -30,9 +39,20 @@ public class LevelLoader {
             high++;
         }while (currentLine!= null);
         level.setSize(width,high);
+        level.setTips(this.loadTips(LevelIndex));
         return level;
     }
 
+    /**
+     * Sub-function of the level loader.
+     * Convert the currently read char in an element of the level
+     * @param level currently load level
+     * @param c  read char
+     * @param collumIndex collum index of the read char
+     * @param lineIndex line index of the read char
+     * @param next index of the next level
+     * @param secret index of the secret level
+     */
     public void convertChar(Level level, char c,double collumIndex,double lineIndex,int next,int secret){
         switch (c){
             case 'X' :
@@ -70,6 +90,26 @@ public class LevelLoader {
                 break;
             default:
                 break;
+        }
+    }
+
+    /**
+     * Extract the tips of the selected level
+     * @param levelIndex Index of the currently load level
+     * @return The tips hold in the file Tips.txt
+     */
+    public String loadTips(int levelIndex){
+        try {
+            String path = "resources/Level/Tips.txt";
+            BufferedReader reader = new BufferedReader(new FileReader(path));
+            String tip = reader.readLine();
+            for (int i = 0; i == levelIndex ;i++) {
+                tip = reader.readLine();
+            }
+            return tip;
+        }
+        catch (Exception e){
+            return "";
         }
     }
 }
