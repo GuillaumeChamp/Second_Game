@@ -5,12 +5,12 @@ import javafx.geometry.Rectangle2D;
 import javafx.scene.image.Image;
 
 public class Spider extends MovingAnimatedImage {
-    private int xStart;
-    private int xEnd;
+    private double xStart;
+    private double xEnd;
     private boolean groundOnly;
-    private int speed;
-    private int yLow;
-    private int yHigh;
+    private double speed;
+    private double yLow;
+    private double yHigh;
     public Image[] spiderImage;
 
     /**
@@ -20,7 +20,7 @@ public class Spider extends MovingAnimatedImage {
      * @param width width of the spider
      * @param height height of the spider
      */
-    public Spider(int x, int y, int width, int height) {
+    public Spider(double x, double y, int width, int height) {
         super(x, y, width, height);
         this.groundOnly = true;
         this.speed = 1;
@@ -39,7 +39,7 @@ public class Spider extends MovingAnimatedImage {
      * @param xStart minimum x of the patrol range
      * @param xEnd maximum x of the patrol range
      */
-    public void setXLimit(int xStart, int xEnd) {
+    public void setXLimit(double xStart, double xEnd) {
         this.xStart = xStart;
         this.xEnd = xEnd;
     }

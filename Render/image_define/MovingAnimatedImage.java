@@ -7,8 +7,8 @@ import javafx.scene.image.Image;
 import java.util.ArrayList;
 
 public class MovingAnimatedImage implements java.io.Serializable{
-	private final Integer width;
-	private final Integer height;
+	private final double width;
+	private final double height;
 	protected double positionX;
 	protected double positionY;
 
@@ -25,7 +25,7 @@ public class MovingAnimatedImage implements java.io.Serializable{
 	protected double gravity;
 	protected double friction;
 
-	public MovingAnimatedImage(int x, int y, int w, int h) {
+	public MovingAnimatedImage(double x, double y, double w, double h) {
 		this.positionX = x;
 		this.positionY = y;
 		this.width = w;
@@ -37,11 +37,11 @@ public class MovingAnimatedImage implements java.io.Serializable{
 		this.friction = 3.33;
 	}
 
-	public Integer getWidth() {
+	public double getWidth() {
 		return width;
 	}
 
-	public Integer getHeight() {
+	public double getHeight() {
 		return height;
 	}
 

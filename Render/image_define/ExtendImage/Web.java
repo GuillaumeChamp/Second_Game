@@ -13,7 +13,7 @@ public class Web extends MovingAnimatedImage {
      * @param width of the web (match with the hit box)
      * @param height of the web (match with the hit box)
      */
-    public Web(double x, double y, int width, int height){
+    public Web(double x, double y, double width, double height){
         super((int)x, (int)y, width, height);
         webImage = new Image[1];
         webImage[0] = new Image("resources/spider/web.png",width,height,false,true);

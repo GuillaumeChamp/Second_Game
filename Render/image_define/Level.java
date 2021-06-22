@@ -34,12 +34,16 @@ public class Level implements DefineLevel {
      * @param width  width of the Level
      * @param height height of the Level
      */
-    public Level(long width, long height){
+    public Level(double width, double height){
         this.sizeY = height;
         this.sizeX = width;
         this.startX = 0;
     }
-
+    public Level(){}
+    public void setSize(double x,double y){
+        this.sizeX=x;
+        this.sizeY=y;
+    }
 
     /**
      * define levels function.
@@ -67,7 +71,11 @@ public class Level implements DefineLevel {
     public void setBlocks(ArrayList<Block> blocks) {
         this.blocks = blocks;
     }
-
+    public void addBlock(Block block){
+        blocks.add(block);
+    }
+    public void addIce(Water water) {ice.add(water);}
+    public void addSpider(Spider spider) {enemies.add(spider);}
     /**
      * Define levels function.
      * Used to add an exit.
@@ -220,7 +228,7 @@ public class Level implements DefineLevel {
             }
         }
         for(Block block : breakableList){
-            gc.drawImage(block.getSkin(),block.getBlock().getMinX()-offsetLandX,block.getBlock().getMinY());
+            gc.drawImage(block.getSkin1(),block.getBlock().getMinX()-offsetLandX,block.getBlock().getMinY());
         }
     }
 

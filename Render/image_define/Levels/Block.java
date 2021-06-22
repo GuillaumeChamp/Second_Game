@@ -4,7 +4,8 @@ import javafx.scene.image.Image;
 
 public class Block {
     Rectangle2D block;
-    Image skin;
+    Image skin1;
+    Image skin2;
 
     /**
      * Create a block that can be use to define the level
@@ -19,10 +20,16 @@ public class Block {
         switch (type){
             //later grass and more argument will be add
             case "breakable" :
-                skin = new Image("resources/Level/breakable.png",width,height,false,true);
+                skin1 = new Image("resources/Level/breakable1.png",width,height,false,true);
+                skin2 = new Image("resources/Level/breakable2.png",width,height,false,true);
                 break;
-            case "grass":
-                //path to ice shape block
+            case "basic":
+                skin1 = new Image("resources/Level/basic1.png",width,height,false,true);
+                skin2 = new Image("resources/Level/basic2.png",width,height,false,true);
+                break;
+            case "ground" :
+                skin1 = new Image("resources/Level/ground1.png",width,height,false,true);
+                skin2 = new Image("resources/Level/ground2.png",width,height,false,true);
                 break;
             default:
                 //path to no shape block
@@ -30,8 +37,12 @@ public class Block {
         }
     }
 
-    public Image getSkin() {
-        return skin;
+    public Image getSkin1() {
+        return skin1;
+    }
+    public Image getSkin(boolean side){
+        if (side) return skin1;
+        return skin2;
     }
 
     public Rectangle2D getBlock() {
