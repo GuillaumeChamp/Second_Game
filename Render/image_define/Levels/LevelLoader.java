@@ -21,8 +21,7 @@ public class LevelLoader {
     public Level load(int LevelIndex) throws IOException {
         int next = LevelIndex +1;
         int secret = LevelIndex +1000;
-        String path = ".\\resources\\Level\\Level" + LevelIndex + ".level";
-        //Fixme : unrecognized path
+        String path = "Render/resources/Level/Level" + LevelIndex + ".level";
         File file = new File(path);
         BufferedReader reader = new BufferedReader(new FileReader(file));
         String currentLine = reader.readLine();
