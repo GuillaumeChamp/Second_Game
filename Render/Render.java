@@ -1,5 +1,7 @@
+import java.io.IOException;
 import java.util.ArrayList;
 import characters.Player;
+import image_define.Levels.LevelLoader;
 import javafx.application.Application;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -32,7 +34,7 @@ public class Render extends Application {
         startButton.setOnAction(e -> {
             theStage.setScene(theScene);
             startNanoTime = System.nanoTime();
-            mainGameLoopTimer.start();
+            //mainGameLoopTimer.start();
         });
         startButton.setLayoutX((width >> 1) - 10);
         startButton.setLayoutY((height >> 1) - 100);
@@ -85,72 +87,81 @@ public class Render extends Application {
 
     private void defineGameLoop(Stage theStage) {
         ArrayList<KeyCode> input = new ArrayList<>(); //store the keyboard input
-
+        LevelLoader levelLoader = new LevelLoader();
         Group root = new Group();
         theScene = new Scene(root);
         Canvas canvas = new Canvas(width, height);
         root.getChildren().add(canvas);
 
         GraphicsContext gc = canvas.getGraphicsContext2D();
+        Level currentLevel = null;
+        try {
+            currentLevel = levelLoader.load(1);
 
-        Level currentLevel = new Level(width, height);
-        currentLevel.modifyLevel(currentLevel, 0);
-        Player player = new Player(210,436,30,60, 40, currentLevel);
-        theScene.setOnKeyPressed(e -> {
-                    KeyCode code = e.getCode();
-                    if (!input.contains(code))
-                        input.add(code);
-                    if (code==KeyCode.E){
-                        currentLevel.swap();
+            currentLevel.modifyLevel(currentLevel, 0);//todo : delete
+            Player player = new Player(210, 436, 30, 60, 40, currentLevel);
+            Level finalCurrentLevel = currentLevel;
+            theScene.setOnKeyPressed(e -> {
+                        KeyCode code = e.getCode();
+                        if (!input.contains(code))
+                            input.add(code);
+                        if (code == KeyCode.E) {
+                            finalCurrentLevel.swap();
+                        }
+                        if (code == KeyCode.R) player.skin.setPosition(finalCurrentLevel.startX, finalCurrentLevel.startY);
+
                     }
-                    if(code==KeyCode.R) player.skin.setPosition(currentLevel.startX, player.skin.currentBlock(player.location, currentLevel.startX,player.skin.getPositionY()).getBlock().getMinY()-1);
+            );
 
+            theScene.setOnKeyReleased(e -> {
+                KeyCode code = e.getCode();
+                input.remove(code);
+            });
+
+            Level finalCurrentLevel1 = currentLevel;
+            mainGameLoopTimer = new AnimationTimer() {
+                public void handle(long currentNanoTime) {
+                    double t = (currentNanoTime - startNanoTime) / 1000000000.0;
+
+                    player.skin.setForceX(0);
+                    player.skin.setForceY(0);
+                    if (input.contains(KeyCode.Q)) {
+                        player.skin.addForces(-10, 0);
+                    }
+                    if (input.contains(KeyCode.D)) {
+                        player.skin.addForces(10, 0);
+                    }
+                    if (input.contains(KeyCode.Z)) {
+                        if (player.CanJump() || player.location.ThereIsALadder(player.skin.getPositionX(), player.skin.getPositionY()))
+                            player.skin.addForces(0, -20);
+                    }
+                    finalCurrentLevel1.updateLevel(t);
+                    Boolean shouldEndGame = player.updateSkin();
+                    if (shouldEndGame) {
+                        theStage.setScene(endScene);
+                        this.stop();
+                    }
+                    mainGameLoopTimer.start();
+
+                    double OffSetLandX = player.skin.getPositionX() - (width >> 1);
+                    double OffSetLandY = player.skin.getPositionY() - (height >> 1);
+                    if (OffSetLandX < 0) OffSetLandX = 0;
+                    if (OffSetLandX > finalCurrentLevel1.getSizeX() - width) OffSetLandX = finalCurrentLevel1.getSizeX() - width;
+                    if (OffSetLandY < 0) OffSetLandY = 0;
+                    if (OffSetLandY > finalCurrentLevel1.getSizeY() - height) OffSetLandY = finalCurrentLevel1.getSizeY() - height;
+
+                    gc.drawImage(background0, 0, 0);
+                    gc.drawImage(background1, 0, 0);
+                    gc.drawImage(background2, 0, 0);
+                    gc.drawImage(background3, 0, 0);
+                    finalCurrentLevel1.drawLevel(gc, OffSetLandX, OffSetLandY, t);
+                    Image playerIm = player.skin.getFrame(t);
+                    gc.drawImage(playerIm, (int) player.skin.getPositionX() - OffSetLandX, (int) player.skin.getPositionY() - player.skin.getHeight() - OffSetLandY, playerIm.getWidth() * (player.skin.getHeight() / playerIm.getHeight()), player.skin.getHeight());
                 }
-        );
-
-        theScene.setOnKeyReleased(e -> {
-            KeyCode code = e.getCode();
-            input.remove(code);
-        });
-
-        mainGameLoopTimer = new AnimationTimer() {
-            public void handle(long currentNanoTime) {
-                double t = (currentNanoTime - startNanoTime) / 1000000000.0;
-
-                player.skin.setForceX(0);
-                player.skin.setForceY(0);
-                if (input.contains(KeyCode.Q)) {
-                    player.skin.addForces(-10,0);
-                }
-                if (input.contains(KeyCode.D)) {
-                    player.skin.addForces(10, 0);
-                }
-                if (input.contains(KeyCode.Z)) {
-                    if (player.CanJump()||player.location.ThereIsALadder(player.skin.getPositionX(),player.skin.getPositionY())) player.skin.addForces(0, -20);
-                }
-                currentLevel.updateLevel(t);
-                Boolean shouldEndGame = player.updateSkin();
-                if (shouldEndGame) {
-                    theStage.setScene(endScene);
-                    this.stop();
-                }
-
-                double OffSetLandX = player.skin.getPositionX() - (width >> 1);
-                double OffSetLandY = player.skin.getPositionY() - (height >> 1);
-                if (OffSetLandX < 0) OffSetLandX = 0;
-                if (OffSetLandX > currentLevel.getSizeX()-width) OffSetLandX = currentLevel.getSizeX()-width;
-                if (OffSetLandY < 0) OffSetLandY = 0;
-                if (OffSetLandY > currentLevel.getSizeY()-height) OffSetLandY = currentLevel.getSizeY()-height;
-
-                gc.drawImage(background0,0,0);
-                gc.drawImage(background1,0,0);
-                gc.drawImage(background2,0,0);
-                gc.drawImage(background3,0,0);
-                currentLevel.drawLevel(gc, OffSetLandX, OffSetLandY, t);
-                Image playerIm = player.skin.getFrame(t);
-                gc.drawImage(playerIm, (int) player.skin.getPositionX() - OffSetLandX, (int) player.skin.getPositionY()-player.skin.getHeight()-OffSetLandY, playerIm.getWidth() * (player.skin.getHeight() / playerIm.getHeight()), player.skin.getHeight());
-            }
-        };
+            };
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     public void start(Stage theStage) {

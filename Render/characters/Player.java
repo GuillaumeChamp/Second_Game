@@ -55,8 +55,8 @@ public class Player {
     public void exit(Exit exit){
         int newLevel = exit.getLink();
         location.clear();
-        location.modifyLevel(location,newLevel);
-        skin.setPosition(location.startX, skin.currentBlock(location, 0,skin.getPositionY()).getBlock().getMinY()-1);
+        location.modifyLevel(location,newLevel); //Todo :delete
+        skin.setPosition(location.startX, location.startY);
         location.setGroundOnly();
         location.setGroundOnly();
     }

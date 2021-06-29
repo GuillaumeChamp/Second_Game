@@ -115,7 +115,7 @@ public class PlayerSkin extends MovingAnimatedImage {
         velocityX = velocityX + accelerationX;
         velocityY = velocityY + accelerationY;
         if (Math.abs(velocityX) < 0.1) velocityX = 0;
-        accelerationX = 0;
+        //accelerationX = 0;
         if (Math.abs(velocityX) > 15) velocityX = 15 * (velocityX / Math.abs(velocityX));
         if (Math.abs(velocityY) > 8) velocityY = 8 * (velocityY / Math.abs(velocityY));
         positionY += velocityY;
@@ -129,6 +129,7 @@ public class PlayerSkin extends MovingAnimatedImage {
      * @param oldY saved position before calculating
      * @param location active level
      */
+    //todo ; fix with an elseif
     public void setGoodPosition(double oldX,double oldY,Level location){
         if (positionY < 0) {
             positionY = 0;

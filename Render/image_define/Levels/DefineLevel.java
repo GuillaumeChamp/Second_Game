@@ -116,7 +116,6 @@ public interface DefineLevel {
         currentLevel.Resize();
         currentLevel.setBlocks(blocks);
         currentLevel.addExitBlock(new Exit(1550,348,50,600-348,"",3));
-        currentLevel.startX = 10;
 
         currentLevel.enemies = new ArrayList<>();
         currentLevel.setTips("I really don't like these spiders");
@@ -142,7 +141,6 @@ public interface DefineLevel {
         currentLevel.setBackground(new javafx.scene.image.Image(imageUrlFire),new javafx.scene.image.Image(imageUrlIce));
         currentLevel.setBlocks(blocks);
         currentLevel.addExitBlock(new Exit(750,0,50,392,"",4));
-        currentLevel.startX = 100;
 
         currentLevel.enemies = new ArrayList<>();
         currentLevel.setTips("I hope be able to go to home");
@@ -169,7 +167,6 @@ public interface DefineLevel {
                 new Block(139,0,1423-139,176,"")
         ));
         currentLevel.setBlocks(blocks);
-        currentLevel.startX = 100;
         ArrayList<Water> ice = new ArrayList<>(Arrays.asList(
                 new Water(229,422,786-229,490-422),
                 new Water(787,422,1092-787,459-422),
@@ -200,7 +197,6 @@ public interface DefineLevel {
         currentLevel.Resize();
         currentLevel.setBlocks(blocks);
         currentLevel.addExitBlock(new Exit(1550, 0, 50, 396,"",6));
-        currentLevel.startX = 150;
 
         currentLevel.setTips("I think I'm  inside their nest");
         Spider spider1 = new Spider(100, 404, 20, 20);
@@ -237,7 +233,6 @@ public interface DefineLevel {
                 new Block(1321,0,1321-1090,351,"")
         ));
         currentLevel.setBlocks(blocks);
-        currentLevel.startX = 100;
         ArrayList<Water> ice = new ArrayList<>(Arrays.asList(
                 new Water(229,422,786-229,490-422),
                 new Water(379,491,786-379,539-491),
@@ -270,7 +265,6 @@ public interface DefineLevel {
         currentLevel.Resize();
         currentLevel.setBlocks(blocks);
         currentLevel.addExitBlock(new Exit(750, 443, 50, 80,"",6));
-        currentLevel.startX = 220;
     }
     static void End(Level currentLevel){
         String imageUrlFire = "resources/Level/Level_end_V1.png";
@@ -287,6 +281,5 @@ public interface DefineLevel {
         currentLevel.setBlocks(blocks);
         currentLevel.addExitBlock(new Exit(780, 300, 20, 80,"",100));
         currentLevel.endGame = true;
-        currentLevel.startX = 10;
     }
 }

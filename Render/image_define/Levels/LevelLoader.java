@@ -4,6 +4,7 @@ import image_define.ExtendImage.Spider;
 import image_define.Level;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 
@@ -14,14 +15,16 @@ public class LevelLoader {
     /**
      * Load the next level
      * @param LevelIndex index of the level to load
-     * @param next index of the nest level
-     * @param secret index of the secret level
      * @return the new loaded level
      * @throws IOException if the level index if a wrong one
      */
-    public Level load(int LevelIndex,int next,int secret) throws IOException {
-        String path = "resources/Level/Level" + LevelIndex + ".Level";
-        BufferedReader reader = new BufferedReader(new FileReader(path));
+    public Level load(int LevelIndex) throws IOException {
+        int next = LevelIndex +1;
+        int secret = LevelIndex +1000;
+        String path = ".\\resources\\Level\\Level" + LevelIndex + ".level";
+        //Fixme : unrecognized path
+        File file = new File(path);
+        BufferedReader reader = new BufferedReader(new FileReader(file));
         String currentLine = reader.readLine();
         Level level = new Level();
         double high = 0;
@@ -40,6 +43,7 @@ public class LevelLoader {
         }while (currentLine!= null);
         level.setSize(width,high);
         level.setTips(this.loadTips(LevelIndex));
+        level.calculateStart();
         return level;
     }
 

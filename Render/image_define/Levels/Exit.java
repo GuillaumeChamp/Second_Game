@@ -1,7 +1,5 @@
 package image_define.Levels;
 
-import javafx.scene.image.Image;
-
 public class Exit extends Block{
     private final int link;
     /**
