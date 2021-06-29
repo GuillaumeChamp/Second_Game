@@ -3,10 +3,7 @@ package image_define.Levels;
 import image_define.ExtendImage.Spider;
 import image_define.Level;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 
 public class LevelLoader {
     double startX = 0;
@@ -16,7 +13,6 @@ public class LevelLoader {
      * Load the next level
      * @param LevelIndex index of the level to load
      * @return the new loaded level
-     * @throws IOException if the level index if a wrong one
      */
     public Level load(int LevelIndex) throws IOException {
         int next = LevelIndex +1;
@@ -24,12 +20,18 @@ public class LevelLoader {
         String path = "Render/resources/Level/Level" + LevelIndex + ".level";
         File file = new File(path);
         BufferedReader reader = new BufferedReader(new FileReader(file));
-        String currentLine = reader.readLine();
+        String currentLine = null;
+        try {
+            currentLine = reader.readLine();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         Level level = new Level();
         double high = 0;
-        double width = currentLine.length();
+        assert currentLine != null;
+        double width = currentLine.length() - 1;
         do{
-            for (int i=0; i == width;i++) {
+            for (int i=0; i <= width;i++) {
                 try {
                     char read = currentLine.charAt(i);
                     convertChar(level,read,i,high,next,secret);
@@ -37,12 +39,17 @@ public class LevelLoader {
                     System.out.println("wrong level format (not a square)");
                 }
             }
-            currentLine=reader.readLine();
+            try {
+                currentLine=reader.readLine();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
             high++;
         }while (currentLine!= null);
-        level.setSize(width,high);
+        level.setSize(16*width,16*high);
         level.setTips(this.loadTips(LevelIndex));
         level.calculateStart();
+        reader.close();
         return level;
     }
 
@@ -59,27 +66,27 @@ public class LevelLoader {
     public void convertChar(Level level, char c,double collumIndex,double lineIndex,int next,int secret){
         switch (c){
             case 'X' :
-                Block b = new Block(16*lineIndex,16*collumIndex,16,16,"basic");
+                Block b = new Block(16*collumIndex,16*lineIndex,16,16,"basic");
                 level.addBlock(b);
                 break;
             case 'G' :
-                Block ground = new Block(16*lineIndex,16*collumIndex,16,16,"ground");
+                Block ground = new Block(16*collumIndex,16*lineIndex,16,16,"ground");
                 level.addBlock(ground);
                 break;
             case 'O' :
-                Water w = new Water(16*lineIndex,16*collumIndex,16,16);
+                Water w = new Water(16*collumIndex,16*lineIndex,16,16);
                 level.addIce(w);
                 break;
             case 'B' :
-                Block br = new Block(16*lineIndex,16*collumIndex,16,16,"breakable");
+                Block br = new Block(16*collumIndex,16*lineIndex,16,16,"breakable");
                 level.addBreakable(br);
                 break;
             case 'E' :
-                Exit exit = new Exit(16*lineIndex,16*collumIndex,16,16,"",next);
+                Exit exit = new Exit(16*collumIndex,16*lineIndex,16,16,"",next);
                 level.addExitBlock(exit);
                 break;
             case 'S' :
-                Exit Secret = new Exit(16*lineIndex,16*collumIndex,16,16,"",secret);
+                Exit Secret = new Exit(16*collumIndex,16*lineIndex,16,16,"",secret);
                 level.addExitBlock(Secret);
                 break;
             case '<' :
@@ -109,6 +116,7 @@ public class LevelLoader {
             for (int i = 0; i == levelIndex ;i++) {
                 tip = reader.readLine();
             }
+            reader.close();
             return tip;
         }
         catch (Exception e){

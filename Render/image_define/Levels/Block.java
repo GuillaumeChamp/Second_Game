@@ -18,7 +18,6 @@ public class Block {
     public Block(double x,double y,double width,double height,String type){
         block = new Rectangle2D(x,y,width,height);
         switch (type){
-            //later grass and more argument will be add
             case "breakable" :
                 skin1 = new Image("resources/Level/breakable1.png",width,height,false,true);
                 skin2 = new Image("resources/Level/breakable2.png",width,height,false,true);
@@ -31,14 +30,13 @@ public class Block {
                 skin1 = new Image("resources/Level/ground1.png",width,height,false,true);
                 skin2 = new Image("resources/Level/ground2.png",width,height,false,true);
                 break;
+            case "ice" :
+                skin1 = new Image("resources/Level/ice1.png",width,height,false,true);
+                skin2 = new Image("resources/Level/ice2.png",width,height,false,true);
+                break;
             default:
-                //path to no shape block
                 break;
         }
-    }
-
-    public Image getSkin1() {
-        return skin1;
     }
     public Image getSkin(boolean side){
         if (side) return skin1;

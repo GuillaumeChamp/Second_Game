@@ -4,8 +4,10 @@ import image_define.ExtendImage.PlayerSkin;
 import image_define.ExtendImage.Spider;
 import image_define.Level;
 import image_define.Levels.Exit;
+import image_define.Levels.LevelLoader;
 import image_define.MovingAnimatedImage;
 
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
 public class Player {
@@ -43,6 +45,7 @@ public class Player {
                     return true;
                 }
                 this.exit(exit);
+                break;
             }
         }
         return false;
@@ -53,9 +56,18 @@ public class Player {
      * @param exit hit by the player
      */
     public void exit(Exit exit){
-        int newLevel = exit.getLink();
+        LevelLoader loader = new LevelLoader();
         location.clear();
-        location.modifyLevel(location,newLevel); //Todo :delete
+        try {
+            location=loader.load(exit.getLink());
+        } catch (Exception e) {
+            System.out.println("reload default");
+            try {
+                location=loader.load(1);
+            } catch (Exception fileNotFoundException) {
+                System.err.println("Default level deleted");
+            }
+        }
         skin.setPosition(location.startX, location.startY);
         location.setGroundOnly();
         location.setGroundOnly();

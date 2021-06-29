@@ -1,7 +1,6 @@
 package image_define;
 
 import image_define.Levels.Block;
-import image_define.Levels.DefineLevel;
 import image_define.Levels.Exit;
 import image_define.Levels.Water;
 import javafx.scene.canvas.GraphicsContext;
@@ -9,14 +8,12 @@ import image_define.ExtendImage.Spider;
 import image_define.ExtendImage.Web;
 
 import javafx.geometry.Rectangle2D;
-import javafx.scene.image.Image;
 
 import java.util.ArrayList;
 
-public class Level implements DefineLevel {
+public class Level {
     public boolean isFire = true;
     public boolean endGame = false;
-    private javafx.scene.image.Image fireBackground;//todo : delete
     private ArrayList<Block> blocks = new ArrayList<>();
     private final ArrayList<Exit> exitList = new ArrayList<>();
     private ArrayList<Block> breakableList = new ArrayList<>();
@@ -29,18 +26,6 @@ public class Level implements DefineLevel {
     public ArrayList<image_define.MovingAnimatedImage> enemies = new ArrayList<>();
     private String tips = "";
 
-    /**
-     * Create a new Level with the selected limits
-     *
-     * @param width  width of the Level
-     * @param height height of the Level
-     */
-    public Level(double width, double height) {
-        this.sizeY = height;
-        this.sizeX = width;
-        //this.startX = 0;
-    }
-
     public Level() {
     }
 
@@ -51,31 +36,11 @@ public class Level implements DefineLevel {
 
     /**
      * define levels function.
-     * Load to this level the background
-     *
-     * @param fire background of the fire side
-     * @param ice  background of the ice side
-     */
-    public void setBackground(Image fire, Image ice) {
-        fireBackground = fire;
-    }
-
-    /**
-     * define levels function.
      *
      * @param tips phrase to show
      */
     public void setTips(String tips) {
         this.tips = tips;
-    }
-
-    /**
-     * define levels function.
-     *
-     * @param blocks add this list of block at the level
-     */
-    public void setBlocks(ArrayList<Block> blocks) {
-        this.blocks = blocks;
     }
 
     public void addBlock(Block block) {
@@ -120,16 +85,6 @@ public class Level implements DefineLevel {
             this.blocks.remove(breakable);
             this.breakableList.remove(breakable);
         }
-    }
-
-    /**
-     * define levels function.
-     * Use to load the water blocks
-     *
-     * @param ice list of water blocks
-     */
-    public void setIce(ArrayList<Water> ice) {
-        this.ice = ice;
     }
 
     public ArrayList<Water> getIce() {
@@ -180,16 +135,6 @@ public class Level implements DefineLevel {
             if (HitBox.contains(X, Y)) ans = true;
         }
         return ans;
-    }
-
-    /**
-     * function to define levels
-     * Make the size of the level matching with
-     */
-    public void Resize() {
-        this.sizeX = fireBackground.getWidth();
-        this.sizeY = fireBackground.getHeight();
-
     }
 
     /**
@@ -253,12 +198,14 @@ public class Level implements DefineLevel {
             }
         }
         for (Block block : blocks) {
-            gc.drawImage(block.getSkin(isFire), block.getBlock().getMinX() - offsetLandX, block.getBlock().getMinY());
+            gc.drawImage(block.getSkin(isFire), block.getBlock().getMinX()-offsetLandX, block.getBlock().getMinY()-offsetLandY);
+        }
+        for (Water water : ice){
+            gc.drawImage(water.getSkin(isFire), water.getBlock().getMinX()-offsetLandX, water.getBlock().getMinY()-offsetLandY);
         }
     }
 
     public void calculateStart() {
-        //small X and bigger Y for this X
         startY = sizeY-1;
         startX = 1; //0 if possible
         boolean end = false;
@@ -270,6 +217,7 @@ public class Level implements DefineLevel {
                 }
                 startY -= 16;
             }
+            startY = 0;
             startX += 16;
         }
     }

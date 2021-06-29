@@ -1,7 +1,6 @@
 package image_define;
 
 import image_define.Levels.Block;
-import image_define.Levels.Water;
 import javafx.scene.image.Image;
 
 import java.util.ArrayList;
